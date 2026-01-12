@@ -318,17 +318,17 @@ public class Users extends JPanel {
 							spStartDate.setValue(startDate);
 						}
 						tfSalary.setText(String.valueOf(currentUser.getSalary()));
-						Role uRole = currentUser.getRole();
-						if(uRole != null){
-							ComboBoxModel<Role> model = cbRole.getModel();
-							for(int i = 0 ;i < model.getSize();i++){
-								Role r = model.getElementAt(i);
-								if(r.getId() == uRole.getId()){
-									cbRole.setSelectedIndex(i);
-									break;
-								}
-							}
-						}
+						// Role uRole = currentUser.getRole();
+						// if(uRole != null){
+						// 	ComboBoxModel<Role> model = cbRole.getModel();
+						// 	for(int i = 0 ;i < model.getSize();i++){
+						// 		Role r = model.getElementAt(i);
+						// 		if(r.getId() == uRole.getId()){
+						// 			cbRole.setSelectedIndex(i);
+						// 			break;
+						// 		}
+						// 	}
+						// }
 					}else{
 						tfName.setText("null Id : " + idUser);
 					}

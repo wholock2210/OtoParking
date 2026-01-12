@@ -71,15 +71,15 @@ public class Main extends JFrame {
 		JPanel pnNavigation = new JPanel(new BorderLayout());
 		wrapperNaviation.add(pnNavigation, gbc);
 		pnMain.add(wrapperNaviation, BorderLayout.WEST);
-		wrapperNaviation.setBackground(new Color(25, 56, 56));
-		pnNavigation.setBackground(new Color(25, 56, 56));
+		wrapperNaviation.setBackground(new Color(30,30,30,30));
+		pnNavigation.setBackground(new Color(30,30,30,30));
 
 		// Naviagion gen
 
 		JPanel ctnButtonNavigation = new JPanel();
 		ctnButtonNavigation.setLayout(
 				new BoxLayout(ctnButtonNavigation, BoxLayout.Y_AXIS));
-		ctnButtonNavigation.setBackground(new Color(25, 56, 56));
+		ctnButtonNavigation.setBackground(new Color(30,30,30,30));
 		pnNavigation.add(ctnButtonNavigation, BorderLayout.CENTER);
 		Font f = new Font("Segoe UI", Font.BOLD, 14);
 		Color hover = new Color(240, 242, 243);
