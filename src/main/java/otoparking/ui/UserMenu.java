@@ -27,21 +27,21 @@ public class UserMenu extends JPanel {
 	public UserMenu(JPanel pnContent, CardLayout cl) {
 		setLayout(new BorderLayout());
 		setBackground(new Color(238, 238, 240));
-		
+
 		JPanel pnMain = new JPanel(new GridLayout(3, 1, 10, 10));
 		JPanel pnChild = new JPanel(new CardLayout());
-		
+
 		add(pnChild, BorderLayout.CENTER);
 		pnChild.add(pnMain, "Main");
 		pnMain.setBackground(new Color(182, 187, 195));
 		Font f = new Font("Segoe UI", Font.BOLD, 20);
 		Color hover = new Color(5, 122, 128, 30);
-		//tool bar
+		// tool bar
 		JPanel Toolbar = new JPanel(new BorderLayout());
 		add(Toolbar, BorderLayout.NORTH);
-		
+
 		ImageIcon backIcon = GetImage.getIcon("back.png");
-		JButton btnBack = new JButton("trở về",backIcon);
+		JButton btnBack = new JButton("trở về", backIcon);
 		btnBack.setHorizontalAlignment(SwingConstants.LEFT);
 		btnBack.setVerticalAlignment(SwingConstants.CENTER);
 		btnBack.setHorizontalTextPosition(SwingConstants.RIGHT);
@@ -51,38 +51,35 @@ public class UserMenu extends JPanel {
 		btnBack.setContentAreaFilled(false);
 		btnBack.setFocusPainted(false);
 		btnBack.setFont(f);
-		
-		btnBack.addMouseListener(new MouseAdapter() {
-		    @Override
-		    public void mouseEntered(MouseEvent e) {
-		    	btnBack.setOpaque(true);
-		    	btnBack.setBackground(hover);
-		    }
 
-		    @Override
-		    public void mouseExited(MouseEvent e) {
-		    	btnBack.setOpaque(false);
-		    	btnBack.setBackground(null);
-		    }
+		btnBack.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnBack.setOpaque(true);
+				btnBack.setBackground(hover);
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnBack.setOpaque(false);
+				btnBack.setBackground(null);
+			}
 		});
-		
+
 		btnBack.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				cl.show(pnContent, "Main");
 			}
 		});
-		
+
 		Toolbar.add(btnBack, BorderLayout.CENTER);
-		
-		
+
 		// button
-		
-		
-		
+
 		ImageIcon roleIcon = GetImage.getIcon("role.png");
-		JButton btnRole = new JButton("tùy chỉnh vai trò",roleIcon);
+		JButton btnRole = new JButton("tùy chỉnh vai trò", roleIcon);
 		btnRole.setHorizontalAlignment(SwingConstants.CENTER);
 		btnRole.setVerticalAlignment(SwingConstants.CENTER);
 		btnRole.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -92,23 +89,23 @@ public class UserMenu extends JPanel {
 		btnRole.setContentAreaFilled(false);
 		btnRole.setFocusPainted(false);
 		btnRole.setFont(f);
-		
-		btnRole.addMouseListener(new MouseAdapter() {
-		    @Override
-		    public void mouseEntered(MouseEvent e) {
-		    	btnRole.setOpaque(true);
-		    	btnRole.setBackground(hover);
-		    }
 
-		    @Override
-		    public void mouseExited(MouseEvent e) {
-		    	btnRole.setOpaque(false);
-		    	btnRole.setBackground(null);
-		    }
+		btnRole.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnRole.setOpaque(true);
+				btnRole.setBackground(hover);
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnRole.setOpaque(false);
+				btnRole.setBackground(null);
+			}
 		});
-		
+
 		ImageIcon userIcon = GetImage.getIcon("user.png");
-		JButton btnUser = new JButton("tùy chỉnh người dùng",userIcon);
+		JButton btnUser = new JButton("Tùy chỉnh người dùng", userIcon);
 		btnUser.setHorizontalAlignment(SwingConstants.CENTER);
 		btnUser.setVerticalAlignment(SwingConstants.CENTER);
 		btnUser.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -118,23 +115,23 @@ public class UserMenu extends JPanel {
 		btnUser.setContentAreaFilled(false);
 		btnUser.setFocusPainted(false);
 		btnUser.setFont(f);
-		
-		btnUser.addMouseListener(new MouseAdapter() {
-		    @Override
-		    public void mouseEntered(MouseEvent e) {
-		    	btnUser.setOpaque(true);
-		    	btnUser.setBackground(hover);
-		    }
 
-		    @Override
-		    public void mouseExited(MouseEvent e) {
-		    	btnUser.setOpaque(false);
-		    	btnUser.setBackground(null);
-		    }
+		btnUser.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnUser.setOpaque(true);
+				btnUser.setBackground(hover);
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnUser.setOpaque(false);
+				btnUser.setBackground(null);
+			}
 		});
-		
+
 		ImageIcon carownerIcon = GetImage.getIcon("carowner.png");
-		JButton btnCarOwner = new JButton("tùy chỉnh người sỡ hữu xe",carownerIcon);
+		JButton btnCarOwner = new JButton("Tùy chỉnh người sở hữu xe", carownerIcon);
 		btnCarOwner.setHorizontalAlignment(SwingConstants.CENTER);
 		btnCarOwner.setVerticalAlignment(SwingConstants.CENTER);
 		btnCarOwner.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -144,29 +141,28 @@ public class UserMenu extends JPanel {
 		btnCarOwner.setContentAreaFilled(false);
 		btnCarOwner.setFocusPainted(false);
 		btnCarOwner.setFont(f);
-		
-		btnCarOwner.addMouseListener(new MouseAdapter() {
-		    @Override
-		    public void mouseEntered(MouseEvent e) {
-		    	btnCarOwner.setOpaque(true);
-		    	btnCarOwner.setBackground(hover);
-		    }
 
-		    @Override
-		    public void mouseExited(MouseEvent e) {
-		    	btnCarOwner.setOpaque(false);
-		    	btnCarOwner.setBackground(null);
-		    }
+		btnCarOwner.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnCarOwner.setOpaque(true);
+				btnCarOwner.setBackground(hover);
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnCarOwner.setOpaque(false);
+				btnCarOwner.setBackground(null);
+			}
 		});
-		
-		
+
 		pnMain.add(btnRole);
 		pnMain.add(btnUser);
 		pnMain.add(btnCarOwner);
 
-		CardLayout clChild = (CardLayout)pnChild.getLayout();
-		pnChild.add(new Roles(pnChild, clChild), "Role");	
-		pnChild.add(new Users(pnChild, clChild), "User");	
+		CardLayout clChild = (CardLayout) pnChild.getLayout();
+		pnChild.add(new Roles(pnChild, clChild), "Role");
+		pnChild.add(new Users(pnChild, clChild), "User");
 
 		btnRole.addActionListener(new ActionListener() {
 			@Override
@@ -181,6 +177,6 @@ public class UserMenu extends JPanel {
 				clChild.show(pnChild, "User");
 			}
 		});
-    }
+	}
 
 }
