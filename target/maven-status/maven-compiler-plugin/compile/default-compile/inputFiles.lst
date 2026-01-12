@@ -1,0 +1,17 @@
+/home/wholock/Projects/Java/Applications/OtoParking/src/main/java/otoparking/DAO/RoleDAO.java
+/home/wholock/Projects/Java/Applications/OtoParking/src/main/java/otoparking/Main.java
+/home/wholock/Projects/Java/Applications/OtoParking/src/main/java/otoparking/model/AppUser.java
+/home/wholock/Projects/Java/Applications/OtoParking/src/main/java/otoparking/model/PriceList.java
+/home/wholock/Projects/Java/Applications/OtoParking/src/main/java/otoparking/model/Role.java
+/home/wholock/Projects/Java/Applications/OtoParking/src/main/java/otoparking/model/TypeCar.java
+/home/wholock/Projects/Java/Applications/OtoParking/src/main/java/otoparking/ui/CarMenu.java
+/home/wholock/Projects/Java/Applications/OtoParking/src/main/java/otoparking/ui/HistoryMenu.java
+/home/wholock/Projects/Java/Applications/OtoParking/src/main/java/otoparking/ui/Home.java
+/home/wholock/Projects/Java/Applications/OtoParking/src/main/java/otoparking/ui/Info.java
+/home/wholock/Projects/Java/Applications/OtoParking/src/main/java/otoparking/ui/More.java
+/home/wholock/Projects/Java/Applications/OtoParking/src/main/java/otoparking/ui/Panel/Roles.java
+/home/wholock/Projects/Java/Applications/OtoParking/src/main/java/otoparking/ui/ParkingMenu.java
+/home/wholock/Projects/Java/Applications/OtoParking/src/main/java/otoparking/ui/Setting.java
+/home/wholock/Projects/Java/Applications/OtoParking/src/main/java/otoparking/ui/UserMenu.java
+/home/wholock/Projects/Java/Applications/OtoParking/src/main/java/otoparking/utilities/DBConection.java
+/home/wholock/Projects/Java/Applications/OtoParking/src/main/java/otoparking/utilities/GetImage.java
