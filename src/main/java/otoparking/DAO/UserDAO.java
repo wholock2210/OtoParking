@@ -10,6 +10,49 @@ import otoparking.model.*;
 import otoparking.utilities.DBConection;
 
 public class UserDAO {
+
+    public AppUser FirstOfDefault(int id){
+        String query = "select *\n" + //
+                        "from AppUser au \n" + //
+                        "where au.id = ? \n" + //
+                        "LIMIT 1";
+        try (
+            Connection conn = DBConection.GetConnection();
+            PreparedStatement ps = conn.prepareStatement(query);
+        ){
+            ps.setInt(1, id);
+            try (
+                ResultSet rs = ps.executeQuery();
+            ) {
+                if(rs.next()){
+
+                    RoleDAO rDAO = new RoleDAO();
+                    Role role = rDAO.FirstOfDefault(rs.getInt("idRole"));
+
+
+                    AppUser userResult = new AppUser(
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getString("phone"),
+                        rs.getString("email"),
+                        rs.getDate("birth"),
+                        rs.getString("address"),
+                        rs.getString("username"),
+                        rs.getString("passwordHash"),
+                        rs.getDate("startDate"),
+                        rs.getDouble("salary"),
+                        role
+                    );
+                    return userResult;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
     public List<AppUser> FindAll(){
         List<AppUser> list = new ArrayList<>();
 

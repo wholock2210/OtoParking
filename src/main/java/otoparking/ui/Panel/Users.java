@@ -5,15 +5,20 @@ import java.awt.CardLayout;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.RowSorter;
 import javax.swing.SortOrder;
+import javax.swing.SpinnerDateModel;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
@@ -28,7 +33,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.List;
+import java.sql.Date;
 
 import otoparking.DAO.*;
 import otoparking.model.*;
@@ -108,7 +113,7 @@ public class Users extends JPanel {
 			});
 		}
 		TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(tableModel);
-		sorter.setSortKeys(List.of(
+		sorter.setSortKeys(java.util.List.of(
 			new RowSorter.SortKey(0, SortOrder.ASCENDING)
 		));
 		JTable table = new JTable(tableModel);
@@ -185,10 +190,13 @@ public class Users extends JPanel {
 
         JLabel lbBirth = new JLabel("Ngày sinh: ");
         lbBirth.setFont(f);
-        JTextField tfBirth = new JTextField();
-		tfBirth.setFont(fnomal);
-        tfBirth.setMaximumSize(new Dimension(Integer.MAX_VALUE, height));
-        tfBirth.setPreferredSize(new Dimension(0, height));
+		SpinnerDateModel modelBirth = new SpinnerDateModel();
+		JSpinner spBirth = new JSpinner(modelBirth);
+		spBirth.setEditor(new JSpinner.DateEditor(spBirth, "dd,MM,yyyy"));
+		spBirth.setFont(fnomal);
+        spBirth.setMaximumSize(new Dimension(Integer.MAX_VALUE, height));
+        spBirth.setPreferredSize(new Dimension(0, height));
+		spBirth.setAlignmentX(0);
 
         JLabel lbAddess = new JLabel("Địa Chỉ: ");
         lbAddess.setFont(f);
@@ -212,11 +220,14 @@ public class Users extends JPanel {
         tfPassword.setPreferredSize(new Dimension(0, height));
 
         JLabel lbStartDate = new JLabel("Ngày tạo: ");
-        lbStartDate.setFont(f);
-        JTextField tfStartDate = new JTextField();
-		tfStartDate.setFont(fnomal);
-        tfStartDate.setMaximumSize(new Dimension(Integer.MAX_VALUE, height));
-        tfStartDate.setPreferredSize(new Dimension(0, height));
+        lbBirth.setFont(f);
+		SpinnerDateModel modelStartDate = new SpinnerDateModel();
+		JSpinner spStartDate = new JSpinner(modelStartDate);
+		spStartDate.setEditor(new JSpinner.DateEditor(spStartDate, "dd,MM,yyyy"));
+		spStartDate.setFont(fnomal);
+        spStartDate.setMaximumSize(new Dimension(Integer.MAX_VALUE, height));
+        spStartDate.setPreferredSize(new Dimension(0, height));
+		spStartDate.setAlignmentX(0);
 
         JLabel lbSalary = new JLabel("Lương: ");
         lbSalary.setFont(f);
@@ -227,10 +238,17 @@ public class Users extends JPanel {
 
         JLabel lbRole = new JLabel("Vai trò: ");
         lbRole.setFont(f);
-        JTextField tfRole = new JTextField();
-		tfRole.setFont(fnomal);
-        tfRole.setMaximumSize(new Dimension(Integer.MAX_VALUE, height));
-        tfRole.setPreferredSize(new Dimension(0, height));
+		RoleDAO rDao = new RoleDAO();
+		DefaultComboBoxModel<Role> modelRole = new DefaultComboBoxModel<>();
+		for(Role r : rDao.FindAll()){
+			modelRole.addElement(r);
+		}
+        JComboBox<Role> cbRole = new JComboBox<>(modelRole);
+
+		cbRole.setFont(fnomal);
+        cbRole.setMaximumSize(new Dimension(Integer.MAX_VALUE, height));
+        cbRole.setPreferredSize(new Dimension(0, height));
+		cbRole.setAlignmentX(0);
 
 		pnDetailsInfo.add(title);
 		pnDetailsInfo.add(Box.createVerticalStrut(20));
@@ -247,7 +265,7 @@ public class Users extends JPanel {
 		pnDetailsInfo.add(tfEmail);
         pnDetailsInfo.add(Box.createVerticalStrut(10));
 		pnDetailsInfo.add(lbBirth);
-		pnDetailsInfo.add(tfBirth);
+		pnDetailsInfo.add(spBirth);
         pnDetailsInfo.add(Box.createVerticalStrut(10));
 		pnDetailsInfo.add(lbAddess);
 		pnDetailsInfo.add(tfAddess);
@@ -259,24 +277,60 @@ public class Users extends JPanel {
 		pnDetailsInfo.add(tfPassword);
         pnDetailsInfo.add(Box.createVerticalStrut(10));
 		pnDetailsInfo.add(lbStartDate);
-		pnDetailsInfo.add(tfStartDate);
+		pnDetailsInfo.add(spStartDate);
         pnDetailsInfo.add(Box.createVerticalStrut(10));
 		pnDetailsInfo.add(lbSalary);
 		pnDetailsInfo.add(tfSalary);
         pnDetailsInfo.add(Box.createVerticalStrut(10));
 		pnDetailsInfo.add(lbRole);
-		pnDetailsInfo.add(tfRole);
+		pnDetailsInfo.add(cbRole);
 
 		//Events
+
+		UserDAO uDAO = new UserDAO();
 
 		table.getSelectionModel().addListSelectionListener(e -> {
 			if(!e.getValueIsAdjusting()){
 				int selectedRow = table.getSelectedRow();
 				if(selectedRow != -1){
 					int modelRow = table.convertRowIndexToModel(selectedRow);
+					int idUser = (int) table.getValueAt(modelRow, 0);
 
-					tfId.setText("ID: " + table.getValueAt(modelRow, 0));
-					tfName.setText("Name: " + table.getValueAt(modelRow, 1));
+					AppUser currentUser = uDAO.FirstOfDefault(idUser);
+
+					if(currentUser != null){
+						tfId.setText(String.valueOf(currentUser.getId()));
+						tfName.setText(currentUser.getName());
+						tfPhone.setText(currentUser.getPhone());
+						tfEmail.setText(currentUser.getEmail());
+						Date birth = currentUser.getBrith();
+						if(birth != null){
+							spBirth.setValue(birth);
+						}
+						tfAddess.setText(currentUser.getAddress());
+						tfUserName.setText(currentUser.getUserName());
+						tfPassword.setText(currentUser.getPasswordHash());
+						Date startDate = currentUser.getStartDate();
+						if(startDate != null){
+							spStartDate.setValue(startDate);
+						}
+						tfSalary.setText(String.valueOf(currentUser.getSalary()));
+						Role uRole = currentUser.getRole();
+						if(uRole != null){
+							ComboBoxModel<Role> model = cbRole.getModel();
+							for(int i = 0 ;i < model.getSize();i++){
+								Role r = model.getElementAt(i);
+								if(r.getId() == uRole.getId()){
+									cbRole.setSelectedIndex(i);
+									break;
+								}
+							}
+						}
+					}else{
+						tfName.setText("null Id : " + idUser);
+					}
+					
+					
 				}
 			}
 		});

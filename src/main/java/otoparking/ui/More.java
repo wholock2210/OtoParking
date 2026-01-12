@@ -26,7 +26,7 @@ public class More extends JPanel {
 	 */
 	public More() {
 		setLayout(new BorderLayout());
-		setBackground(new Color(182, 187, 195));
+		//setBackground(new Color(182, 187, 195));
 		
 		JPanel pnMain = new JPanel(new GridLayout(2, 2, 10, 10));
 		JPanel pnContent = new JPanel(new CardLayout());
@@ -36,7 +36,7 @@ public class More extends JPanel {
 		//button 
 		
 		Font f = new Font("Segoe UI", Font.BOLD, 20);
-		Color hover = new Color(5, 122, 128, 30);
+		Color hover = new Color(0,0,0, 30);
 		
 		ImageIcon userIcon = GetImage.getIcon("user.png");
 		JButton btnUser = new JButton("tùy chỉnh người dùng",userIcon);
