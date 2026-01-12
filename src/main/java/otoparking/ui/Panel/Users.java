@@ -39,26 +39,26 @@ import otoparking.DAO.*;
 import otoparking.model.*;
 
 public class Users extends JPanel {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    public Users(JPanel pnContent, CardLayout cl){
-        setLayout(new BorderLayout());
+	public Users(JPanel pnContent, CardLayout cl) {
+		setLayout(new BorderLayout());
 		setBackground(new Color(238, 238, 240));
-		
+
 		JPanel pnMain = new JPanel(new BorderLayout());
 		JPanel pnChild = new JPanel(new CardLayout());
-		
+
 		add(pnChild, BorderLayout.CENTER);
 		pnChild.add(pnMain, "Main");
 		pnMain.setBackground(new Color(182, 187, 195));
 		Font f = new Font("Segoe UI", Font.BOLD, 20);
 		Color hover = new Color(5, 122, 128, 30);
-		//tool bar
+		// tool bar
 		JPanel Toolbar = new JPanel(new BorderLayout());
 		add(Toolbar, BorderLayout.NORTH);
-		
+
 		ImageIcon backIcon = GetImage.getIcon("back.png");
-		JButton btnBack = new JButton("trở về trang quản lý người dùng",backIcon);
+		JButton btnBack = new JButton("Trở về trang quản lý người dùng", backIcon);
 		btnBack.setHorizontalAlignment(SwingConstants.LEFT);
 		btnBack.setVerticalAlignment(SwingConstants.CENTER);
 		btnBack.setHorizontalTextPosition(SwingConstants.RIGHT);
@@ -68,125 +68,125 @@ public class Users extends JPanel {
 		btnBack.setContentAreaFilled(false);
 		btnBack.setFocusPainted(false);
 		btnBack.setFont(f);
-		
-		btnBack.addMouseListener(new MouseAdapter() {
-		    @Override
-		    public void mouseEntered(MouseEvent e) {
-		    	btnBack.setOpaque(true);
-		    	btnBack.setBackground(hover);
-		    }
 
-		    @Override
-		    public void mouseExited(MouseEvent e) {
-		    	btnBack.setOpaque(false);
-		    	btnBack.setBackground(null);
-		    }
+		btnBack.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnBack.setOpaque(true);
+				btnBack.setBackground(hover);
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnBack.setOpaque(false);
+				btnBack.setBackground(null);
+			}
 		});
-		
+
 		btnBack.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				cl.show(pnContent, "Main");
 			}
 		});
-		
+
 		Toolbar.add(btnBack, BorderLayout.CENTER);
 
-		//content
+		// content
 
-		////list
-		
+		//// list
+
 		UserDAO DAO = new UserDAO();
-		DefaultTableModel tableModel = new DefaultTableModel(new String[]{
-			"ID",
-			"tên",
-			"Điện thoại",
-			"vai trò"
+		DefaultTableModel tableModel = new DefaultTableModel(new String[] {
+				"ID",
+				"Tên",
+				"Điện thoại",
+				"Vai trò"
 		}, 0);
-		for(AppUser r : DAO.FindAll()){
-			tableModel.addRow(new Object[]{
-				r.getId(),
-				r.getName(),
-                r.getPhone(),
-                r.getRole().getName(),
+		for (AppUser r : DAO.FindAll()) {
+			tableModel.addRow(new Object[] {
+					r.getId(),
+					r.getName(),
+					r.getPhone(),
+					r.getRole().getName(),
 			});
 		}
 		TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(tableModel);
 		sorter.setSortKeys(java.util.List.of(
 			new RowSorter.SortKey(0, SortOrder.ASCENDING)
 		));
+
 		JTable table = new JTable(tableModel);
 		table.setRowSorter(sorter);
-        table.setFont(f);
-        table.setRowHeight(40);
+		table.setFont(f);
+		table.setRowHeight(40);
 		JScrollPane scrollPane = new JScrollPane(table);
 
 		pnMain.add(scrollPane);
 
 		//// details
-		
-		
+
 		JPanel pnDetail = new JPanel(new BorderLayout());
-        JPanel pnDetailsInfo = new JPanel();
-        JPanel pnDetailsFunction = new JPanel(new GridLayout(2,2,10,10));
-        pnDetail.add(pnDetailsFunction, BorderLayout.SOUTH);
-		pnDetailsInfo.setLayout(new BoxLayout(pnDetailsInfo,BoxLayout.Y_AXIS));
+		JPanel pnDetailsInfo = new JPanel();
+		JPanel pnDetailsFunction = new JPanel(new GridLayout(2, 2, 10, 10));
+		pnDetail.add(pnDetailsFunction, BorderLayout.SOUTH);
+		pnDetailsInfo.setLayout(new BoxLayout(pnDetailsInfo, BoxLayout.Y_AXIS));
 		JScrollPane spDetails = new JScrollPane(pnDetailsInfo);
-        pnDetail.add(spDetails, BorderLayout.CENTER);
+		pnDetail.add(spDetails, BorderLayout.CENTER);
 		pnMain.add(pnDetail, BorderLayout.EAST);
 		pnDetail.setPreferredSize(new Dimension(350, 0));
 
-        ////details function
-        
-        JButton jbCreate = new JButton("Thêm");
-        jbCreate.setFont(f);
-        JButton jbDelete = new JButton("Xóa");
-        jbDelete.setFont(f);
-        JButton jbEdit = new JButton("Sửa");
-        jbEdit.setFont(f);
+		//// details function
 
+		JButton jbCreate = new JButton("Thêm");
+		jbCreate.setFont(f);
+		JButton jbDelete = new JButton("Xóa");
+		jbDelete.setFont(f);
+		JButton jbEdit = new JButton("Sửa");
+		jbEdit.setFont(f);
 
-        pnDetailsFunction.add(jbCreate);
-        pnDetailsFunction.add(jbDelete);
-        pnDetailsFunction.add(jbEdit);
-        
-        ////details info
+		pnDetailsFunction.add(jbCreate);
+		pnDetailsFunction.add(jbDelete);
+		pnDetailsFunction.add(jbEdit);
+
+		//// details info
 
 		JLabel title = new JLabel("Người dùng");
 		title.setFont(new Font("Segoe UI", Font.BOLD, 30));
 		title.setHorizontalAlignment(SwingConstants.CENTER);
-		
-        Font fnomal = new Font("Segoe UI", Font.PLAIN, 16);
-        int height = 40;
-        
-        JLabel lbId = new JLabel("ID: ");
-        lbId.setFont(f);
+
+		Font fnomal = new Font("Segoe UI", Font.PLAIN, 16);
+		int height = 40;
+
+		JLabel lbId = new JLabel("ID: ");
+		lbId.setFont(f);
 		JTextField tfId = new JTextField();
 		tfId.setFont(fnomal);
-        tfId.setMaximumSize(new Dimension(Integer.MAX_VALUE, height));
-        tfId.setPreferredSize(new Dimension(0, height));
+		tfId.setMaximumSize(new Dimension(Integer.MAX_VALUE, height));
+		tfId.setPreferredSize(new Dimension(0, height));
 
-        JLabel lbName = new JLabel("Tên: ");
-        lbName.setFont(f);
+		JLabel lbName = new JLabel("Tên: ");
+		lbName.setFont(f);
 		JTextField tfName = new JTextField();
 		tfName.setFont(fnomal);
-        tfName.setMaximumSize(new Dimension(Integer.MAX_VALUE, height));
-        tfName.setPreferredSize(new Dimension(0, height));
+		tfName.setMaximumSize(new Dimension(Integer.MAX_VALUE, height));
+		tfName.setPreferredSize(new Dimension(0, height));
 
-        JLabel lbPhone = new JLabel("Điện thoại: ");
-        lbPhone.setFont(f);
-        JTextField tfPhone = new JTextField();
+		JLabel lbPhone = new JLabel("Điện thoại: ");
+		lbPhone.setFont(f);
+		JTextField tfPhone = new JTextField();
 		tfPhone.setFont(fnomal);
-        tfPhone.setMaximumSize(new Dimension(Integer.MAX_VALUE, height));
-        tfPhone.setPreferredSize(new Dimension(0, height));
+		tfPhone.setMaximumSize(new Dimension(Integer.MAX_VALUE, height));
+		tfPhone.setPreferredSize(new Dimension(0, height));
 
-        JLabel lbEmail = new JLabel("Email: ");
-        lbEmail.setFont(f);
-        JTextField tfEmail = new JTextField();
+		JLabel lbEmail = new JLabel("Email: ");
+		lbEmail.setFont(f);
+		JTextField tfEmail = new JTextField();
 		tfEmail.setFont(fnomal);
-        tfEmail.setMaximumSize(new Dimension(Integer.MAX_VALUE, height));
-        tfEmail.setPreferredSize(new Dimension(0, height));
+		tfEmail.setMaximumSize(new Dimension(Integer.MAX_VALUE, height));
+		tfEmail.setPreferredSize(new Dimension(0, height));
+
 
         JLabel lbBirth = new JLabel("Ngày sinh: ");
         lbBirth.setFont(f);
@@ -198,26 +198,26 @@ public class Users extends JPanel {
         spBirth.setPreferredSize(new Dimension(0, height));
 		spBirth.setAlignmentX(0);
 
-        JLabel lbAddess = new JLabel("Địa Chỉ: ");
-        lbAddess.setFont(f);
-        JTextField tfAddess = new JTextField();
+		JLabel lbAddess = new JLabel("Địa Chỉ: ");
+		lbAddess.setFont(f);
+		JTextField tfAddess = new JTextField();
 		tfAddess.setFont(fnomal);
-        tfAddess.setMaximumSize(new Dimension(Integer.MAX_VALUE, height));
-        tfAddess.setPreferredSize(new Dimension(0, height));
+		tfAddess.setMaximumSize(new Dimension(Integer.MAX_VALUE, height));
+		tfAddess.setPreferredSize(new Dimension(0, height));
 
-        JLabel lbUsername = new JLabel("Tên đăng nhập: ");
-        lbUsername.setFont(f);
-        JTextField tfUserName = new JTextField();
+		JLabel lbUsername = new JLabel("Tên đăng nhập: ");
+		lbUsername.setFont(f);
+		JTextField tfUserName = new JTextField();
 		tfUserName.setFont(fnomal);
-        tfUserName.setMaximumSize(new Dimension(Integer.MAX_VALUE, height));
-        tfUserName.setPreferredSize(new Dimension(0, height));
+		tfUserName.setMaximumSize(new Dimension(Integer.MAX_VALUE, height));
+		tfUserName.setPreferredSize(new Dimension(0, height));
 
-        JLabel lbPassword = new JLabel("Mật khẩu: ");
-        lbPassword.setFont(f);
-        JTextField tfPassword = new JTextField();
+		JLabel lbPassword = new JLabel("Mật khẩu: ");
+		lbPassword.setFont(f);
+		JTextField tfPassword = new JTextField();
 		tfPassword.setFont(fnomal);
-        tfPassword.setMaximumSize(new Dimension(Integer.MAX_VALUE, height));
-        tfPassword.setPreferredSize(new Dimension(0, height));
+		tfPassword.setMaximumSize(new Dimension(Integer.MAX_VALUE, height));
+		tfPassword.setPreferredSize(new Dimension(0, height));
 
         JLabel lbStartDate = new JLabel("Ngày tạo: ");
         lbBirth.setFont(f);
@@ -229,12 +229,14 @@ public class Users extends JPanel {
         spStartDate.setPreferredSize(new Dimension(0, height));
 		spStartDate.setAlignmentX(0);
 
-        JLabel lbSalary = new JLabel("Lương: ");
-        lbSalary.setFont(f);
-        JTextField tfSalary = new JTextField();
+
+		JLabel lbSalary = new JLabel("Lương: ");
+		lbSalary.setFont(f);
+		JTextField tfSalary = new JTextField();
 		tfSalary.setFont(fnomal);
-        tfSalary.setMaximumSize(new Dimension(Integer.MAX_VALUE, height));
-        tfSalary.setPreferredSize(new Dimension(0, height));
+		tfSalary.setMaximumSize(new Dimension(Integer.MAX_VALUE, height));
+		tfSalary.setPreferredSize(new Dimension(0, height));
+
 
         JLabel lbRole = new JLabel("Vai trò: ");
         lbRole.setFont(f);
@@ -250,6 +252,7 @@ public class Users extends JPanel {
         cbRole.setPreferredSize(new Dimension(0, height));
 		cbRole.setAlignmentX(0);
 
+
 		pnDetailsInfo.add(title);
 		pnDetailsInfo.add(Box.createVerticalStrut(20));
 		pnDetailsInfo.add(lbId);
@@ -257,42 +260,42 @@ public class Users extends JPanel {
 		pnDetailsInfo.add(Box.createVerticalStrut(10));
 		pnDetailsInfo.add(lbName);
 		pnDetailsInfo.add(tfName);
-        pnDetailsInfo.add(Box.createVerticalStrut(10));
+		pnDetailsInfo.add(Box.createVerticalStrut(10));
 		pnDetailsInfo.add(lbPhone);
 		pnDetailsInfo.add(tfPhone);
-        pnDetailsInfo.add(Box.createVerticalStrut(10));
+		pnDetailsInfo.add(Box.createVerticalStrut(10));
 		pnDetailsInfo.add(lbEmail);
 		pnDetailsInfo.add(tfEmail);
-        pnDetailsInfo.add(Box.createVerticalStrut(10));
+		pnDetailsInfo.add(Box.createVerticalStrut(10));
 		pnDetailsInfo.add(lbBirth);
 		pnDetailsInfo.add(spBirth);
         pnDetailsInfo.add(Box.createVerticalStrut(10));
 		pnDetailsInfo.add(lbAddess);
 		pnDetailsInfo.add(tfAddess);
-        pnDetailsInfo.add(Box.createVerticalStrut(10));
+		pnDetailsInfo.add(Box.createVerticalStrut(10));
 		pnDetailsInfo.add(lbUsername);
 		pnDetailsInfo.add(tfUserName);
-        pnDetailsInfo.add(Box.createVerticalStrut(10));
+		pnDetailsInfo.add(Box.createVerticalStrut(10));
 		pnDetailsInfo.add(lbPassword);
 		pnDetailsInfo.add(tfPassword);
-        pnDetailsInfo.add(Box.createVerticalStrut(10));
+		pnDetailsInfo.add(Box.createVerticalStrut(10));
 		pnDetailsInfo.add(lbStartDate);
 		pnDetailsInfo.add(spStartDate);
         pnDetailsInfo.add(Box.createVerticalStrut(10));
 		pnDetailsInfo.add(lbSalary);
 		pnDetailsInfo.add(tfSalary);
-        pnDetailsInfo.add(Box.createVerticalStrut(10));
+		pnDetailsInfo.add(Box.createVerticalStrut(10));
 		pnDetailsInfo.add(lbRole);
 		pnDetailsInfo.add(cbRole);
 
-		//Events
+		// Events
 
 		UserDAO uDAO = new UserDAO();
 
 		table.getSelectionModel().addListSelectionListener(e -> {
-			if(!e.getValueIsAdjusting()){
+			if (!e.getValueIsAdjusting()) {
 				int selectedRow = table.getSelectedRow();
-				if(selectedRow != -1){
+				if (selectedRow != -1) {
 					int modelRow = table.convertRowIndexToModel(selectedRow);
 					int idUser = (int) table.getValueAt(modelRow, 0);
 
@@ -334,5 +337,5 @@ public class Users extends JPanel {
 				}
 			}
 		});
-    }
+	}
 }
