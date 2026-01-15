@@ -32,14 +32,14 @@ import java.util.List;
 import otoparking.DAO.*;
 import otoparking.model.Role;
 
-public class Roles extends JPanel {
+public class PnRole extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Create the panel.
 	 */
-	public Roles(JPanel pnContent, CardLayout cl) {
+	public PnRole(JPanel pnContent, CardLayout cl) {
 		setLayout(new BorderLayout());
 		setBackground(new Color(238, 238, 240));
 

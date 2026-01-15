@@ -15,6 +15,20 @@ public class AppUser {
     private double salary;
     private Role role;
 
+    public AppUser(String name, String phone, String email, Date brith, String address, String userName,
+            String passwordHash, Date startDate, double salary, Role role) {
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.brith = brith;
+        this.address = address;
+        this.userName = userName;
+        this.passwordHash = passwordHash;
+        this.startDate = startDate;
+        this.salary = salary;
+        this.role = role;
+    }
+
     public AppUser(int id, String name, String phone, String email, Date brith, String address, String userName,
             String passwordHash, Date startDate, double salary, Role role) {
         this.id = id;

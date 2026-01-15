@@ -161,8 +161,8 @@ public class UserMenu extends JPanel {
 		pnMain.add(btnCarOwner);
 
 		CardLayout clChild = (CardLayout) pnChild.getLayout();
-		pnChild.add(new Roles(pnChild, clChild), "Role");
-		pnChild.add(new Users(pnChild, clChild), "User");
+		pnChild.add(new PnRole(pnChild, clChild), "Role");
+		pnChild.add(new PnUser(pnChild, clChild), "User");
 
 		btnRole.addActionListener(new ActionListener() {
 			@Override
