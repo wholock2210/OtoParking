@@ -26,3 +26,5 @@ replay_pid*
 #build folder
 target/
 
+#file connect db
+src/main/java/otoparking/utilities/DBConection.java
