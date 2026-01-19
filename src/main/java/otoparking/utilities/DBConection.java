@@ -5,8 +5,12 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DBConection {
+<<<<<<< Updated upstream
     private static final String connectionString = 
         "jdbc:mysql://localhost:3306/OtoParking?useSSL=false&serverTimezone=UTC";
+=======
+    private static final String connectionString = "jdbc:mysql://100.101.143.118:3306/OtoParking?useSSL=false&serverTimezone=UTC";
+>>>>>>> Stashed changes
     private static final String _USER = "wholock";
     private static final String _PASSWORD = "221004";
 

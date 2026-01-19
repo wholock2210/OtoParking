@@ -161,8 +161,14 @@ public class UserMenu extends JPanel {
 		pnMain.add(btnCarOwner);
 
 		CardLayout clChild = (CardLayout) pnChild.getLayout();
+<<<<<<< Updated upstream
 		pnChild.add(new Roles(pnChild, clChild), "Role");
 		pnChild.add(new Users(pnChild, clChild), "User");
+=======
+		pnChild.add(new PnRole(pnChild, clChild), "Role");
+		pnChild.add(new PnUser(pnChild, clChild), "User");
+		pnChild.add(new PnCarOwner(pnChild, clChild), "CarOwner");
+>>>>>>> Stashed changes
 
 		btnRole.addActionListener(new ActionListener() {
 			@Override
@@ -175,6 +181,13 @@ public class UserMenu extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				clChild.show(pnChild, "User");
+			}
+		});
+
+		btnCarOwner.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				clChild.show(pnChild, "CarOwner");
 			}
 		});
 	}
