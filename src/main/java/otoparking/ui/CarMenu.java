@@ -1,9 +1,14 @@
 package otoparking.ui;
 
+
+import otoparking.ui.Panel.PnCar;
+import otoparking.ui.Panel.PnCarOwner;
+
 import otoparking.ui.Panel.PnPriceList;
 import otoparking.ui.Panel.PnRole;
 import otoparking.ui.Panel.PnTypeCar;
 import otoparking.ui.Panel.PnUser;
+
 import otoparking.utilities.*;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -166,12 +171,20 @@ public class CarMenu extends JPanel {
 		CardLayout clChild = (CardLayout) pnChild.getLayout();
 		pnChild.add(new PnTypeCar(pnChild, clChild), "TypeCar");
 		pnChild.add(new PnPriceList(pnChild, clChild), "PriceList");
+		pnChild.add(new PnCar(pnChild, clChild), "Car");
+
+		// pnChild.add();
 		btnType.addActionListener(e -> {
 			clChild.show(pnChild, "TypeCar");
 		});
-		btnPrice.addActionListener(e ->{
+		btnCar.addActionListener(e -> {
+			clChild.show(pnChild, "Car");
+		});
+
+		btnPrice.addActionListener(e -> {
 			clChild.show(pnChild, "PriceList");
 		});
+
 	}
 
 }

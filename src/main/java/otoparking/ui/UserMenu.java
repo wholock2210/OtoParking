@@ -163,6 +163,7 @@ public class UserMenu extends JPanel {
 		CardLayout clChild = (CardLayout) pnChild.getLayout();
 		pnChild.add(new PnRole(pnChild, clChild), "Role");
 		pnChild.add(new PnUser(pnChild, clChild), "User");
+		pnChild.add(new PnCarOwner(pnChild, clChild), "CarOwner");
 
 		btnRole.addActionListener(new ActionListener() {
 			@Override
@@ -175,6 +176,13 @@ public class UserMenu extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				clChild.show(pnChild, "User");
+			}
+		});
+
+		btnCarOwner.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				clChild.show(pnChild, "CarOwner");
 			}
 		});
 	}
