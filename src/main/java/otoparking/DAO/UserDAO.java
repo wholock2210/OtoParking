@@ -11,6 +11,75 @@ import otoparking.utilities.DBConection;
 
 public class UserDAO {
 
+    public boolean Update(AppUser user){
+        String query = "update AppUser au \n" + //
+                        "set name = ?, phone = ?, email = ?, birth = ?, address = ?, username = ? ," +
+                        "passwordHash = ?, startDate = ?, salary = ?, idRole = ?\n" + //
+                        "where id = ?\n";
+        try (
+            Connection conn = DBConection.GetConnection();
+            PreparedStatement ps = conn.prepareStatement(query);
+        ) {
+            ps.setString(1, user.getName());
+            ps.setString(2, user.getPhone());
+            ps.setString(3, user.getEmail());
+            ps.setDate(4, user.getBrith());
+            ps.setString(5, user.getAddress());
+            ps.setString(6, user.getUserName());
+            ps.setString(7, user.getPasswordHash());
+            ps.setDate(8, user.getStartDate());
+            ps.setDouble(9, user.getSalary());
+            ps.setInt(10, user.getRole().getId());
+            ps.setInt(11, user.getId());
+
+            return ps.executeUpdate() > 0;
+            
+        } catch (Exception e) {
+           e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean Delete(AppUser user){
+        String query = "delete FROM AppUser\n" + //
+                        "where id = ?";
+        try (
+            Connection conn = DBConection.GetConnection();
+            PreparedStatement ps = conn.prepareStatement(query);
+        ) {
+            ps.setInt(1, user.getId());
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean Insert(AppUser user){
+        String query = "INSERT into AppUser ( name, phone, email , birth, address, username , passwordHash ,startDate , salary, idRole)\n" + //
+                        "values (?, ?, ?, ?, ?, ?, ?, ? , ?, ?)";
+        try (
+            Connection conn = DBConection.GetConnection();
+            PreparedStatement ps = conn.prepareStatement(query);
+        ) {
+            ps.setString(1, user.getName());
+            ps.setString(2, user.getPhone());
+            ps.setString(3, user.getEmail());
+            ps.setDate(4, user.getBrith());
+            ps.setString(5, user.getAddress());
+            ps.setString(6, user.getUserName());
+            ps.setString(7, user.getPasswordHash());
+            ps.setDate(8, user.getStartDate());
+            ps.setDouble(9, user.getSalary());
+            ps.setInt(10, user.getRole().getId());
+
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public AppUser FirstOfDefault(int id){
         String query = "select *\n" + //
                         "from AppUser au \n" + //

@@ -5,6 +5,11 @@ public class PriceList {
     private TypeCar typeCar;
     private double pricePerHour;
 
+    public PriceList(TypeCar typeCar, double pricePerHour) {
+        this.typeCar = typeCar;
+        this.pricePerHour = pricePerHour;
+    }
+
     public PriceList(int id, TypeCar typeCar, double pricePerHour) {
         this.id = id;
         this.typeCar = typeCar;
@@ -34,4 +39,5 @@ public class PriceList {
     public void setPricePerHour(double pricePerHour) {
         this.pricePerHour = pricePerHour;
     }
+
 }
