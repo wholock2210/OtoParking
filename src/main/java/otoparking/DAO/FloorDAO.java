@@ -9,9 +9,9 @@ import otoparking.model.*;
 
 import otoparking.utilities.DBConection;;
 
-public class CellDAO {
-    public boolean Update(Cell cell){
-        String query = "update Cell " + 
+public class FloorDAO {
+    public boolean Update(Floor floor){
+        String query = "update Floor " + 
                         "set symbol = ? " + 
                         "where id = ? ";
 
@@ -19,7 +19,7 @@ public class CellDAO {
             Connection conn = DBConection.GetConnection();
             PreparedStatement ps = conn.prepareStatement(query);
         ){
-            ps.setString(1, cell.getSymbol());
+            ps.setString(1, floor.getSymbol());
 
             return ps.executeUpdate() > 0;
 
@@ -29,14 +29,14 @@ public class CellDAO {
         return false;
     }
 
-    public boolean Delete(Cell cell){
-        String query = "delete from Cell " + 
+    public boolean Delete(Floor floor){
+        String query = "delete from Floor " + 
                         "where id = ? ";
         try (
             Connection conn = DBConection.GetConnection();
             PreparedStatement ps = conn.prepareStatement(query);
         ){
-            ps.setInt(1, cell.getId());
+            ps.setInt(1, floor.getId());
             return ps.executeUpdate() > 0;
         } catch (Exception e){
             e.printStackTrace();
@@ -44,13 +44,13 @@ public class CellDAO {
         return false;
     }
 
-    public boolean Insert(Cell cell){
-        String query = "Insert into Cell (symbol) value (?) ";
+    public boolean Insert(Floor floor){
+        String query = "Insert into Floor (symbol) value (?) ";
         try(
             Connection conn = DBConection.GetConnection();
             PreparedStatement ps = conn.prepareStatement(query);
         ){
-            ps.setString(1, cell.getSymbol());
+            ps.setString(1, floor.getSymbol());
             return ps.executeUpdate() > 0;
         }catch (Exception e){
             e.printStackTrace();
@@ -59,9 +59,9 @@ public class CellDAO {
         return false;
     }
 
-    public Cell FirstOfDefault(int id){
+    public Floor FirstOfDefault(int id){
         String query = "select * " + //
-                        "from Cell " + //
+                        "from Floor " + //
                         "where id = ? " + 
                         "limit 1 ";
         try(
@@ -73,8 +73,8 @@ public class CellDAO {
                 ResultSet rs = ps.executeQuery();
             ){
                 if(rs.next()){
-                    Cell cellResult = new Cell(rs.getInt("id"), rs.getString("symbol"));
-                    return cellResult;
+                    Floor floorResult = new Floor(rs.getInt("id"), rs.getString("symbol"));
+                    return floorResult;
                 }
             }catch (Exception e){
                 e.printStackTrace();
@@ -85,10 +85,10 @@ public class CellDAO {
         return null;
     }
 
-    public List<Cell> FindAll(){
-        List<Cell> list = new ArrayList<>();
+    public List<Floor> FindAll(){
+        List<Floor> list = new ArrayList<>();
 
-        String query = "select * from Cell";
+        String query = "select * from Floor";
 
         try(
             Connection conn = DBConection.GetConnection();
@@ -96,13 +96,11 @@ public class CellDAO {
             ResultSet rs = ps.executeQuery();
         ){
             while (rs.next()) {
-                list.add(new Cell(rs.getInt("id"), rs.getString("symbol")));
+                list.add(new Floor(rs.getInt("id"), rs.getString("symbol")));
             }
         }catch (Exception e){
             e.printStackTrace();
         }
         return list;
     }
-
-    
 }

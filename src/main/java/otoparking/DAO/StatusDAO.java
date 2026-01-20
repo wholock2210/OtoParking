@@ -1,25 +1,27 @@
 package otoparking.DAO;
 
+import java.io.ObjectInputFilter.Status;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-import otoparking.model.*;
 
-import otoparking.utilities.DBConection;;
+import otoparking.model.Cell;
+import otoparking.utilities.DBConection;
 
-public class CellDAO {
-    public boolean Update(Cell cell){
-        String query = "update Cell " + 
-                        "set symbol = ? " + 
+public class StatusDAO {
+    public boolean Update(otoparking.model.Status status){
+        String query = "update Status " + 
+                        "set name = ?, description = ? " + 
                         "where id = ? ";
 
         try (
             Connection conn = DBConection.GetConnection();
             PreparedStatement ps = conn.prepareStatement(query);
         ){
-            ps.setString(1, cell.getSymbol());
+            ps.setString(1, status.getName());
+            ps.setString(2, status.getDescription());
 
             return ps.executeUpdate() > 0;
 
@@ -29,14 +31,14 @@ public class CellDAO {
         return false;
     }
 
-    public boolean Delete(Cell cell){
-        String query = "delete from Cell " + 
+    public boolean Delete(otoparking.model.Status status){
+        String query = "delete from Status " + 
                         "where id = ? ";
         try (
             Connection conn = DBConection.GetConnection();
             PreparedStatement ps = conn.prepareStatement(query);
         ){
-            ps.setInt(1, cell.getId());
+            ps.setInt(1, status.getId());
             return ps.executeUpdate() > 0;
         } catch (Exception e){
             e.printStackTrace();
@@ -44,13 +46,14 @@ public class CellDAO {
         return false;
     }
 
-    public boolean Insert(Cell cell){
-        String query = "Insert into Cell (symbol) value (?) ";
+    public boolean Insert(otoparking.model.Status status){
+        String query = "Insert into Ststus (name, description) value (?, ?) ";
         try(
             Connection conn = DBConection.GetConnection();
             PreparedStatement ps = conn.prepareStatement(query);
         ){
-            ps.setString(1, cell.getSymbol());
+            ps.setString(1, status.getName());
+            ps.setString(2, status.getDescription());
             return ps.executeUpdate() > 0;
         }catch (Exception e){
             e.printStackTrace();
@@ -59,9 +62,9 @@ public class CellDAO {
         return false;
     }
 
-    public Cell FirstOfDefault(int id){
+    public otoparking.model.Status FirstOfDefault(int id){
         String query = "select * " + //
-                        "from Cell " + //
+                        "from Status " + //
                         "where id = ? " + 
                         "limit 1 ";
         try(
@@ -73,8 +76,10 @@ public class CellDAO {
                 ResultSet rs = ps.executeQuery();
             ){
                 if(rs.next()){
-                    Cell cellResult = new Cell(rs.getInt("id"), rs.getString("symbol"));
-                    return cellResult;
+                    otoparking.model.Status statusResult = new otoparking.model.Status(rs.getInt("id"), 
+                    rs.getString("name"), 
+                    rs.getString("description"));
+                    return statusResult;
                 }
             }catch (Exception e){
                 e.printStackTrace();
@@ -85,10 +90,10 @@ public class CellDAO {
         return null;
     }
 
-    public List<Cell> FindAll(){
-        List<Cell> list = new ArrayList<>();
+    public List<otoparking.model.Status> FindAll(){
+        List<otoparking.model.Status> list = new ArrayList<>();
 
-        String query = "select * from Cell";
+        String query = "select * from Status";
 
         try(
             Connection conn = DBConection.GetConnection();
@@ -96,13 +101,12 @@ public class CellDAO {
             ResultSet rs = ps.executeQuery();
         ){
             while (rs.next()) {
-                list.add(new Cell(rs.getInt("id"), rs.getString("symbol")));
+                
+                list.add(new otoparking.model.Status(rs.getInt("id"), rs.getString("name"), rs.getString("description")));
             }
         }catch (Exception e){
             e.printStackTrace();
         }
         return list;
     }
-
-    
 }

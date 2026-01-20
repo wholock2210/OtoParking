@@ -5,13 +5,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-import otoparking.model.*;
 
-import otoparking.utilities.DBConection;;
+import otoparking.model.Cell;
+import otoparking.model.ParkingRow;
+import otoparking.utilities.DBConection;
 
-public class CellDAO {
-    public boolean Update(Cell cell){
-        String query = "update Cell " + 
+public class ParkingRowDAO {
+    public boolean Update(ParkingRow parkingRow){
+        String query = "update ParkingRow " + 
                         "set symbol = ? " + 
                         "where id = ? ";
 
@@ -19,7 +20,7 @@ public class CellDAO {
             Connection conn = DBConection.GetConnection();
             PreparedStatement ps = conn.prepareStatement(query);
         ){
-            ps.setString(1, cell.getSymbol());
+            ps.setString(1, parkingRow.getSymbol());
 
             return ps.executeUpdate() > 0;
 
@@ -29,14 +30,14 @@ public class CellDAO {
         return false;
     }
 
-    public boolean Delete(Cell cell){
-        String query = "delete from Cell " + 
+    public boolean Delete(ParkingRow parkingRow){
+        String query = "delete from ParkingRow " + 
                         "where id = ? ";
         try (
             Connection conn = DBConection.GetConnection();
             PreparedStatement ps = conn.prepareStatement(query);
         ){
-            ps.setInt(1, cell.getId());
+            ps.setInt(1, parkingRow.getId());
             return ps.executeUpdate() > 0;
         } catch (Exception e){
             e.printStackTrace();
@@ -45,7 +46,7 @@ public class CellDAO {
     }
 
     public boolean Insert(Cell cell){
-        String query = "Insert into Cell (symbol) value (?) ";
+        String query = "Insert into ParkingRow (symbol) value (?) ";
         try(
             Connection conn = DBConection.GetConnection();
             PreparedStatement ps = conn.prepareStatement(query);
@@ -59,9 +60,9 @@ public class CellDAO {
         return false;
     }
 
-    public Cell FirstOfDefault(int id){
+    public ParkingRow FirstOfDefault(int id){
         String query = "select * " + //
-                        "from Cell " + //
+                        "from ParkingRow " + //
                         "where id = ? " + 
                         "limit 1 ";
         try(
@@ -73,8 +74,8 @@ public class CellDAO {
                 ResultSet rs = ps.executeQuery();
             ){
                 if(rs.next()){
-                    Cell cellResult = new Cell(rs.getInt("id"), rs.getString("symbol"));
-                    return cellResult;
+                    ParkingRow parkingRowResult = new ParkingRow(rs.getInt("id"), rs.getString("symbol"));
+                    return parkingRowResult;
                 }
             }catch (Exception e){
                 e.printStackTrace();
@@ -85,10 +86,10 @@ public class CellDAO {
         return null;
     }
 
-    public List<Cell> FindAll(){
-        List<Cell> list = new ArrayList<>();
+    public List<ParkingRow> FindAll(){
+        List<ParkingRow> list = new ArrayList<>();
 
-        String query = "select * from Cell";
+        String query = "select * from ParkingRow";
 
         try(
             Connection conn = DBConection.GetConnection();
@@ -96,13 +97,11 @@ public class CellDAO {
             ResultSet rs = ps.executeQuery();
         ){
             while (rs.next()) {
-                list.add(new Cell(rs.getInt("id"), rs.getString("symbol")));
+                list.add(new ParkingRow(rs.getInt("id"), rs.getString("symbol")));
             }
         }catch (Exception e){
             e.printStackTrace();
         }
         return list;
     }
-
-    
 }

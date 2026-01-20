@@ -5,6 +5,11 @@ public class Car {
     private String licensePlate;
     private TypeCar typeCar;
 
+    public Car(int id, String licensePlate) {
+        this.id = id;
+        this.licensePlate = licensePlate;
+    }
+
     public Car(String licensePlate, TypeCar typeCar) {
         this.licensePlate = licensePlate;
         this.typeCar = typeCar;
