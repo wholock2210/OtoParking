@@ -1,5 +1,9 @@
 package otoparking.ui;
 
+import otoparking.ui.Panel.PnCell;
+import otoparking.ui.Panel.PnFloor;
+import otoparking.ui.Panel.PnParkingRow;
+import otoparking.ui.Panel.PnStatus;
 import otoparking.utilities.*;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -213,6 +217,28 @@ public class ParkingMenu extends JPanel {
 		pnMain.add(btnRow);
 		pnMain.add(btnCell);
 		pnMain.add(btnRowCell);
+
+		CardLayout clChild = (CardLayout) pnChild.getLayout();
+		pnChild.add(new PnCell(pnChild, clChild), "Cell");
+		pnChild.add(new PnFloor(pnChild, clChild), "Floor");
+		pnChild.add(new PnParkingRow(pnChild, clChild), "Parking Row");
+		pnChild.add(new PnStatus(pnChild, clChild), "Status");
+
+		btnCell.addActionListener(e -> {
+			clChild.show(pnChild, "Cell");
+		});
+
+		btnFloor.addActionListener(e -> {
+			clChild.show(pnChild, "Floor");
+		});
+
+		btnRow.addActionListener(e -> {
+			clChild.show(pnChild, "Parking Row");
+		});
+
+		btnStatus.addActionListener(e -> {
+			clChild.show(pnChild, "Status");
+		});
 	}
 
 }

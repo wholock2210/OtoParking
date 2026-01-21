@@ -2,7 +2,6 @@ package otoparking.ui.Panel;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
-
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ComboBoxModel;
@@ -14,19 +13,15 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.RowSorter;
 import javax.swing.SortOrder;
-import javax.swing.SpinnerDateModel;
 import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
-
 import otoparking.utilities.GetImage;
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -35,9 +30,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.Date;
 import java.util.List;
-
 import otoparking.DAO.*;
 import otoparking.model.*;
 
