@@ -2,7 +2,6 @@ package otoparking.ui.Panel;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
-
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ComboBoxModel;
@@ -22,9 +21,7 @@ import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
-
 import otoparking.utilities.GetImage;
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -34,7 +31,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
-
 import otoparking.DAO.*;
 import otoparking.model.*;
 

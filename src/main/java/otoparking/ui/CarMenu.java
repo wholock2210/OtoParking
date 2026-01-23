@@ -1,8 +1,6 @@
 package otoparking.ui;
 
-
 import otoparking.ui.Panel.PnCar;
-
 import otoparking.ui.Panel.PnPriceList;
 import otoparking.ui.Panel.PnTypeCar;
 
@@ -164,6 +162,7 @@ public class CarMenu extends JPanel {
 		pnMain.add(btnType);
 		pnMain.add(btnCar);
 		pnMain.add(btnPrice);
+
 
 		CardLayout clChild = (CardLayout) pnChild.getLayout();
 		pnChild.add(new PnTypeCar(pnChild, clChild), "TypeCar");

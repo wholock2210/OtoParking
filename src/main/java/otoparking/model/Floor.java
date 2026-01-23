@@ -4,6 +4,7 @@ public class Floor {
     private int id;
     private String symbol;
 
+
     public Floor(int id, String symbol) {
         this.id = id;
         this.symbol = symbol;
