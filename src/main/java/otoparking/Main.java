@@ -26,7 +26,13 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+
+import nu.pattern.OpenCV;
+
 public class Main extends JFrame {
+	static {
+		OpenCV.loadLocally();
+	}
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
