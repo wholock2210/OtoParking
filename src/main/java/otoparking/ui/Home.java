@@ -16,6 +16,8 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerDateModel;
 import javax.swing.SwingConstants;
 
 import otoparking.ui.Panel.PnCamera;
@@ -129,14 +131,53 @@ public class Home extends JPanel {
 		tfUser.setMaximumSize(new Dimension(Integer.MAX_VALUE, height));
         tfUser.setPreferredSize(new Dimension(0, height));
 
-		// JLabel lbStatus = new JLabel("Trạng thái: ");
-		// lbStatus.setFont(f);
-		// DefaultComboBoxModel<String> modelRole = new DefaultComboBoxModel<>(
-		// 	"Chưa đỗ",
-		// 	"Đang đỗ"
-		// );
-        // JComboBox cbStatus = new JComboBox<>(modelRole);
+		DefaultComboBoxModel<String> modelStatus =
+			new DefaultComboBoxModel<>(new String[] {
+				"Chưa đỗ",
+				"Đang đỗ"
+			});
+		
+		JLabel lbStatus = new JLabel("Trạng thái: ");
+		lbStatus.setFont(f);
+		JComboBox<String> cbStatus = new JComboBox<>(modelStatus);
+		cbStatus.setFont(fnomal);
+        cbStatus.setMaximumSize(new Dimension(Integer.MAX_VALUE, height));
+        cbStatus.setPreferredSize(new Dimension(0, height));
+		cbStatus.setAlignmentX(0);
 
+		JLabel lbStart = new JLabel("Thời gian vào: ");
+        lbStart.setFont(f);
+		SpinnerDateModel modelStart = new SpinnerDateModel();
+		JSpinner spStart = new JSpinner(modelStart);
+		spStart.setEditor(new JSpinner.DateEditor(spStart, "dd,MM,yyyy"));
+		spStart.setFont(fnomal);
+        spStart.setMaximumSize(new Dimension(Integer.MAX_VALUE, height));
+        spStart.setPreferredSize(new Dimension(0, height));
+		spStart.setAlignmentX(0);
+
+		JLabel lbEnd = new JLabel("Thời gian ra: ");
+        lbEnd.setFont(f);
+		SpinnerDateModel modelEnd = new SpinnerDateModel();
+		JSpinner spEnd = new JSpinner(modelEnd);
+		spEnd.setEditor(new JSpinner.DateEditor(spEnd, "dd,MM,yyyy"));
+		spEnd.setFont(fnomal);
+        spEnd.setMaximumSize(new Dimension(Integer.MAX_VALUE, height));
+        spEnd.setPreferredSize(new Dimension(0, height));
+		spEnd.setAlignmentX(0);
+
+		JLabel lbTotalTime = new JLabel("Tổng thời gian đỗ: ");
+		lbTotalTime.setFont(f);
+		TextField tfTotalTime = new TextField();
+		tfTotalTime.setFont(fnomal);
+		tfTotalTime.setMaximumSize(new Dimension(Integer.MAX_VALUE, height));
+        tfTotalTime.setPreferredSize(new Dimension(0, height));
+
+		JLabel lbTotalMoney = new JLabel("Tổng tiền: ");
+		lbTotalMoney.setFont(f);
+		TextField tfTotalMoney = new TextField();
+		tfTotalMoney.setFont(fnomal);
+		tfTotalMoney.setMaximumSize(new Dimension(Integer.MAX_VALUE, height));
+        tfTotalMoney.setPreferredSize(new Dimension(0, height));
 		
 
 		pnDetailsInfo.add(title);
@@ -146,6 +187,21 @@ public class Home extends JPanel {
 		pnDetailsInfo.add(Box.createVerticalStrut(10));
         pnDetailsInfo.add(lbUser);
         pnDetailsInfo.add(tfUser);
+		pnDetailsInfo.add(Box.createVerticalStrut(10));
+        pnDetailsInfo.add(lbStatus);
+        pnDetailsInfo.add(cbStatus);
+		pnDetailsInfo.add(Box.createVerticalStrut(10));
+        pnDetailsInfo.add(lbStart);
+        pnDetailsInfo.add(spStart);
+		pnDetailsInfo.add(Box.createVerticalStrut(10));
+        pnDetailsInfo.add(lbEnd);
+        pnDetailsInfo.add(spEnd);
+		pnDetailsInfo.add(Box.createVerticalStrut(10));
+        pnDetailsInfo.add(lbTotalTime);
+        pnDetailsInfo.add(tfTotalTime);
+		pnDetailsInfo.add(Box.createVerticalStrut(10));
+        pnDetailsInfo.add(lbTotalMoney);
+        pnDetailsInfo.add(tfTotalMoney);
 
 
 		//events

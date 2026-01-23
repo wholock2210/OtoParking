@@ -39,7 +39,7 @@ public class CameraService {
                     Mat frameForUI = frame.clone();
                     Mat frameForAPI = frame.clone();
                     Imgproc.cvtColor(frameForUI, frameForUI, Imgproc.COLOR_BGR2RGB);
-                    //org.opencv.core.Core.flip(frame, frame, 1);
+                    org.opencv.core.Core.flip(frame, frame, 1);
 
                     BufferedImage imgForUI = MatToBufferImage(frameForUI);
                     panel.updateImage(imgForUI);
@@ -55,8 +55,6 @@ public class CameraService {
     }
 
     public void Stop(){
-
-        System.out.println("cameraservice bi dung");
         running = false;
         apiPostImage.Stop();
 
