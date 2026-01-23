@@ -209,7 +209,8 @@ public class Main extends JFrame {
 
 		// event click button
 
-		pnContent.add(new Home(), "Home");
+		Home home = new Home();
+		pnContent.add(home, "Home");
 		pnContent.add(new More(), "More");
 		pnContent.add(new Setting(), "Setting");
 		pnContent.add(new Info(), "Info");
@@ -217,16 +218,16 @@ public class Main extends JFrame {
 		CardLayout cl = (CardLayout) pnContent.getLayout();
 
 		btnHome.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				home.onShow();
 				cl.show(pnContent, "Home");
 			}
 		});
 		btnMore.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				home.onHide();
 				cl.show(pnContent, "More");
 			}
 		});
@@ -234,6 +235,7 @@ public class Main extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				home.onHide();
 				cl.show(pnContent, "Setting");
 			}
 		});
@@ -241,6 +243,7 @@ public class Main extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				home.onHide();
 				cl.show(pnContent, "Info");
 			}
 		});

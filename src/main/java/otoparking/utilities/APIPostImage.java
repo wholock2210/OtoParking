@@ -11,45 +11,71 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
 import javax.imageio.ImageIO;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class APIPostImage {
 
-    private final BlockingQueue<BufferedImage> queue = new ArrayBlockingQueue<>(2);
+    private BlockingQueue<BufferedImage> queue;
 
-    private boolean running = true;
+    private boolean running = false;
+    private String licencePlate; 
+
+    public String getLicencePlate() {
+        return licencePlate;
+    }
+
+    public void setLicencePlate(String licencePlate) {
+        this.licencePlate = licencePlate;
+    }
 
     private final String URL_API = "http://localhost:8000/detect-plate";
     private final HttpClient client = HttpClient.newBuilder()
-        .version(HttpClient.Version.HTTP_1_1) // CỰC KỲ QUAN TRỌNG
+        .version(HttpClient.Version.HTTP_1_1) 
         .build();
 
-    public APIPostImage(){
-        new Thread(this::Start).start();
-    }
+    private Thread workerThread;
+
 
     public void Submit(BufferedImage image){
+        if(!running)
+            return;
+
         if(queue.remainingCapacity() == 0){
             queue.poll();
         }
         queue.offer(image);
     }
 
-    private void Start(){
-        while (running) {
-            try {
-                BufferedImage image = queue.take();
+    public void Start(){
+        if (running) return;
 
-                SendToAPI(image);
+        queue = new ArrayBlockingQueue<>(2);
+        running = true;
 
-                Thread.sleep(500);
-            } catch (Exception e) {
-                e.printStackTrace();
+        workerThread = new Thread(() -> {
+            while (running) {
+                try {
+                    BufferedImage image = queue.take();
+                    SendToAPI(image);
+                    Thread.sleep(2000);
+                }catch (InterruptedException e){
+                    continue;
+                }
+                 catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
-        }
+        });
+        workerThread.start();
+
     }
 
     public void Stop(){
         running = false;
+        if(workerThread != null){
+            workerThread.interrupt();
+        }
     }
 
 
@@ -85,6 +111,8 @@ public class APIPostImage {
             System.out.println("Status: " + response.statusCode());
             System.out.println("API response: " + response.body());
 
+            handleApiResponse(response.body());
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -99,5 +127,18 @@ public class APIPostImage {
         return baos.toByteArray();
     }
     
-    
+    private void handleApiResponse(String json) {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode root = mapper.readTree(json);
+
+            JsonNode results = root.path("results");
+            if (results.isArray() && results.size() > 0) {
+                setLicencePlate(results.get(0).path("license_plate").asText());
+                System.out.println("License plate = " + getLicencePlate());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

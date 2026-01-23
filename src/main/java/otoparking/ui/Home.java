@@ -27,6 +27,7 @@ public class Home extends JPanel {
 
 	private PnCamera cameraPanel;
 	private CameraService cameraService;
+	private boolean cameraStarted = false;
 
 	/**
 	 * Create the panel.
@@ -49,6 +50,21 @@ public class Home extends JPanel {
 
 		cameraService.Start(cameraPanel);
 	}
+
+	public void onShow() {
+		System.out.println("vao home");
+		if (!cameraStarted) {
+			cameraService.Start(cameraPanel);
+			cameraStarted = true;
+		}
+	}
+
+	public void onHide() {
+		System.out.println("roi home");
+		cameraService.Stop();
+		cameraStarted = false;
+	}
+
 
 	private void Draw(){
 		setLayout(new BorderLayout());
@@ -82,10 +98,13 @@ public class Home extends JPanel {
         jbCarOut.setFont(f);
         JButton jbAddNewCar = new JButton("Thêm xe mới");
         jbAddNewCar.setFont(f);
+		JButton jbGetLicencePlate = new JButton("Lấy biến số");
+        jbGetLicencePlate.setFont(f);
 
         pnDetailsFunction.add(jbCarIn);
         pnDetailsFunction.add(jbCarOut);
         pnDetailsFunction.add(jbAddNewCar);
+        pnDetailsFunction.add(jbGetLicencePlate);
 
 		//details info
 
@@ -129,6 +148,11 @@ public class Home extends JPanel {
         pnDetailsInfo.add(tfUser);
 
 
+		//events
+
+		jbGetLicencePlate.addActionListener(e -> {
+			tfLicencePlate.setText(cameraService.getLicencePlate());
+		});
 	}
 
 }

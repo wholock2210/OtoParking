@@ -15,7 +15,13 @@ public class CameraService {
     private boolean running;
     private APIPostImage apiPostImage = new APIPostImage();
 
+    private Thread cameraThread;
+
     public void Start(PnCamera panel){
+
+        if(running)
+            return;
+
         camera = new VideoCapture(0);
 
         if(!camera.isOpened()){
@@ -23,8 +29,9 @@ public class CameraService {
             return;
         }
         running = true;
+        apiPostImage.Start();
 
-        new Thread(() ->{
+        cameraThread = new Thread(() ->{
             Mat frame = new Mat();
             
             while (running) {
@@ -43,12 +50,19 @@ public class CameraService {
                 }
             }
             camera.release();
-            apiPostImage.Stop();
-        }).start();
+        });
+        cameraThread.start();
     }
 
     public void Stop(){
+
+        System.out.println("cameraservice bi dung");
         running = false;
+        apiPostImage.Stop();
+
+        if(cameraThread != null){
+            cameraThread.interrupt();
+        }
     }
 
     private BufferedImage MatToBufferImage(Mat mat){
@@ -63,4 +77,7 @@ public class CameraService {
         return image;
     }
     
+    public String getLicencePlate(){
+        return apiPostImage.getLicencePlate();
+    }
 }
