@@ -5,8 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-import otoparking.model.*;
 
+import otoparking.model.PriceList;
+import otoparking.model.TypeCar;
 import otoparking.utilities.DBConection;
 
 public class PriceListDAO {
@@ -61,6 +62,40 @@ public class PriceListDAO {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public PriceList FindByTypeOfDefault(int idType){
+        String query = "SELECT * FROM `PriceList` \n" +
+                        "WHERE `idType` = ? \n" +
+                        "LIMIT 1";
+        try (
+            Connection conn = DBConection.GetConnection();
+            PreparedStatement ps = conn.prepareStatement(query);
+        ){
+            ps.setInt(1, idType);
+            try (
+                ResultSet rs = ps.executeQuery();
+            ) {
+                if(rs.next()){
+
+                    TypeCarDAO tcDAO = new TypeCarDAO();
+
+                    TypeCar typeCar = tcDAO.FirstOfDefault(rs.getInt("idType"));
+
+                    PriceList typeCarResult = new PriceList(
+                        rs.getInt("id"),
+                        typeCar,
+                        rs.getDouble("pricePerHour")
+                    );
+                    return typeCarResult;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public PriceList FirstOfDefault(int id){

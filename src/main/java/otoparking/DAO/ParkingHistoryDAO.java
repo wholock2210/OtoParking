@@ -20,10 +20,15 @@ public class ParkingHistoryDAO {
             PreparedStatement ps = conn.prepareStatement(query);
         ){
             ps.setInt(1, parkingHistory.getCar().getId());
-            ps.setInt(2, parkingHistory.getRowCell().getId());
+            if(parkingHistory.getRowCell() == null){
+                ps.setNull(2, java.sql.Types.INTEGER);
+            }else{
+                ps.setInt(2, parkingHistory.getRowCell().getId());
+            }
             ps.setDate(3, parkingHistory.getStartTime());
             ps.setDate(4, parkingHistory.getEndTime());
             ps.setDouble(5, parkingHistory.getParkingMinutes());
+            ps.setInt(6, parkingHistory.getId());
 
             return ps.executeUpdate() > 0;
         } catch (Exception e){
@@ -47,6 +52,39 @@ public class ParkingHistoryDAO {
         return false;
     }
 
+    public ParkingHistory FindParkedCar(int idCar){
+        String query = "SELECT * FROM `ParkingHistory` \n" + //
+                        "WHERE idCar = ? \n" + //
+                        "ORDER BY (NOW() - `startTime`) \n" + 
+                        "LIMIT 1 \n";
+        
+        try (
+            Connection conn = DBConection.GetConnection();
+            PreparedStatement ps = conn.prepareStatement(query);
+        ){
+            ps.setInt(1, idCar);
+            try(
+                ResultSet rs = ps.executeQuery();
+            ){
+                CarDAO cDao = new CarDAO();
+                RowCellDAO rcDAO = new RowCellDAO();
+
+                if(rs.next()){
+                    Car car = cDao.FirstOfDefault(rs.getInt("idCar"));
+                    RowCell rowCell = rcDAO.FirstOfDefault(rs.getInt("idRowCell"));
+
+                    ParkingHistory parkingHistory = new ParkingHistory(rs.getInt("id"), car, rowCell, rs.getDate("startTime"), rs.getDate("endTime"), rs.getDouble("parkingMinutes"));
+                    return parkingHistory;
+                }
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public boolean Insert(ParkingHistory parkingHistory){
         String query = "Insert into ParkingHistory(idCar, idRowCell, startTime, endTime, parkingMinutes)" + 
                         "values (?, ?, ?, ?, ?)";
@@ -55,11 +93,21 @@ public class ParkingHistoryDAO {
             Connection conn = DBConection.GetConnection();
             PreparedStatement ps = conn.prepareStatement(query);
         ){
+
             ps.setInt(1, parkingHistory.getCar().getId());
-            ps.setInt(2, parkingHistory.getRowCell().getId());
+            if(parkingHistory.getRowCell() == null){
+                ps.setNull(2, java.sql.Types.INTEGER);
+            }else{
+                ps.setInt(2, parkingHistory.getRowCell().getId());
+            }
             ps.setDate(3, parkingHistory.getStartTime());
-            ps.setDate(4, parkingHistory.getEndTime());
+            if(parkingHistory.getEndTime() == null){
+                ps.setNull(4, java.sql.Types.DATE);
+            }else{
+                ps.setDate(4, parkingHistory.getEndTime());
+            }
             ps.setDouble(5, parkingHistory.getParkingMinutes());
+            
 
             return ps.executeUpdate() > 0;
         } catch (Exception e){

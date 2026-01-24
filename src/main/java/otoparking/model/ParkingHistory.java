@@ -8,7 +8,12 @@ public class ParkingHistory {
     private RowCell rowCell;
     private Date startTime;
     private Date endTime;
-    private double parkingMinutes;
+    private double parkingMinutes = 0.0;
+
+    public ParkingHistory(Car car, Date startTime) {
+        this.car = car;
+        this.startTime = startTime;
+    }
 
     public ParkingHistory(int id, Car car, RowCell rowCell, Date startTime, Date endTime, double parkingMinutes) {
         this.id = id;

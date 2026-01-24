@@ -1,6 +1,8 @@
 package otoparking.utilities;
 
 import org.opencv.core.Mat;
+import org.opencv.core.Point;
+import org.opencv.core.Scalar;
 import org.opencv.videoio.VideoCapture;
 
 import otoparking.ui.Panel.PnCamera;
@@ -39,7 +41,12 @@ public class CameraService {
                     Mat frameForUI = frame.clone();
                     Mat frameForAPI = frame.clone();
                     Imgproc.cvtColor(frameForUI, frameForUI, Imgproc.COLOR_BGR2RGB);
-                    org.opencv.core.Core.flip(frame, frame, 1);
+                    org.opencv.core.Core.flip(frameForUI, frameForUI, 1);
+
+                    int[] plate_bbox = apiPostImage.getPlate_bbox();
+                    if(plate_bbox != null){
+                        drawBBox(frameForUI, plate_bbox);
+                    }
 
                     BufferedImage imgForUI = MatToBufferImage(frameForUI);
                     panel.updateImage(imgForUI);
@@ -52,6 +59,31 @@ public class CameraService {
             camera.release();
         });
         cameraThread.start();
+    }
+
+    private void drawBBox(Mat img, int[] bbox) {
+        if (bbox.length != 4) return;
+
+        Point p1 = new Point(bbox[0], bbox[1]);
+        Point p2 = new Point(bbox[2], bbox[3]);
+
+        Imgproc.rectangle(
+            img,
+            p1,
+            p2,
+            new Scalar(0, 255, 0), 
+            2
+        );
+
+        Imgproc.putText(
+            img,
+            "PLATE",
+            new Point(bbox[0], bbox[1] - 10),
+            Imgproc.FONT_HERSHEY_SIMPLEX,
+            0.6,
+            new Scalar(255, 0, 0),
+            2
+        );
     }
 
     public void Stop(){

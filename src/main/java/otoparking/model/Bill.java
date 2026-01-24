@@ -8,6 +8,12 @@ public class Bill {
     private double totalAmount;
     private Date createdAt;
 
+    public Bill(ParkingHistory parkingHistory, double totalAmount, Date createdAt) {
+        this.parkingHistory = parkingHistory;
+        this.totalAmount = totalAmount;
+        this.createdAt = createdAt;
+    }
+
     public Bill(int id, ParkingHistory parkingHistory, double totalAmount, Date createdAt) {
         this.id = id;
         this.parkingHistory = parkingHistory;

@@ -333,10 +333,13 @@ public class PnCar extends JPanel {
         jbDelete.setFont(f);
         JButton jbEdit = new JButton("Sửa");
         jbEdit.setFont(f);
+        JButton jbRefesh = new JButton("Tải lại");
+        jbRefesh.setFont(f);
 
         pnDetailsFunction.add(jbCreate);
         pnDetailsFunction.add(jbDelete);
         pnDetailsFunction.add(jbEdit);
+        pnDetailsFunction.add(jbRefesh);
 
         //// details info
 
@@ -357,6 +360,9 @@ public class PnCar extends JPanel {
 
         jbEdit.addActionListener(e -> {
             onJBEdit();
+        });
+        jbRefesh.addActionListener(e -> {
+            LoadDataToTableModel();
         });
 
     }

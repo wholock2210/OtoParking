@@ -7,6 +7,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.Arrays;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
@@ -20,6 +21,15 @@ public class APIPostImage {
 
     private boolean running = false;
     private String licencePlate; 
+    private int[] plate_bbox = new int[4];
+
+    public int[] getPlate_bbox() {
+        return plate_bbox;
+    }
+
+    public void setPlate_bbox(int[] plate_bbox) {
+        this.plate_bbox = plate_bbox;
+    }
 
     public String getLicencePlate() {
         return licencePlate;
@@ -83,7 +93,7 @@ public class APIPostImage {
     private void SendToAPI(BufferedImage image) {
         try {
             byte[] imageBytes = BufferedImageToBytes(image);
-            System.out.println("JPEG size = " + imageBytes.length);
+            // System.out.println("JPEG size = " + imageBytes.length);
 
             String boundary = "----JavaBoundary" + System.currentTimeMillis();
             String CRLF = "\r\n";
@@ -108,8 +118,8 @@ public class APIPostImage {
             HttpResponse<String> response =
                     client.send(request, HttpResponse.BodyHandlers.ofString());
 
-            System.out.println("Status: " + response.statusCode());
-            System.out.println("API response: " + response.body());
+            // System.out.println("Status: " + response.statusCode());
+            // System.out.println("API response: " + response.body());
 
             handleApiResponse(response.body());
 
@@ -134,8 +144,19 @@ public class APIPostImage {
 
             JsonNode results = root.path("results");
             if (results.isArray() && results.size() > 0) {
-                setLicencePlate(results.get(0).path("license_plate").asText());
+                JsonNode first = results.get(0);
+                setLicencePlate(first.path("license_plate").asText());
                 System.out.println("License plate = " + getLicencePlate());
+
+                JsonNode bboxNode = first.path("plate_bbox");
+                if (bboxNode.isArray() && bboxNode.size() == 4) {
+                    for (int i = 0; i < 4; i++) {
+                        plate_bbox[i] = bboxNode.get(i).asInt();
+                    }
+                }
+                System.out.println("BBox = " + Arrays.toString(plate_bbox));
+            }else{
+                plate_bbox = new int[4];
             }
         } catch (Exception e) {
             e.printStackTrace();

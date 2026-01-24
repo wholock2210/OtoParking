@@ -61,6 +61,38 @@ public class CarDAO {
         return false;
     }
 
+    public Car FirstOfDefault(String licenceplate){
+        String query = "select *\n" + //
+                        "from Car\n" + //
+                        "where `licensePlate` = ? \n" + //
+                        "LIMIT 1";
+        try (
+                Connection conn = DBConection.GetConnection();
+                PreparedStatement ps = conn.prepareStatement(query);
+            ) 
+            {
+            ps.setString(1, licenceplate);
+            try (
+                    ResultSet rs = ps.executeQuery();) {
+                if (rs.next()) {
+                    TypeCarDAO tcDAO = new TypeCarDAO();
+                    TypeCar typeCar = tcDAO.FirstOfDefault(rs.getInt("idType"));
+                    Car carResult = new Car(
+                            rs.getInt("id"),
+                            rs.getString("licensePlate"),
+                            typeCar);
+                    return carResult;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public Car FirstOfDefault(int id) {
         String query = "select *\n" + //
                 "from Car \n" + //
