@@ -1,21 +1,21 @@
 package otoparking.model;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class ParkingHistory {
     private int id;
     private Car car;
     private RowCell rowCell;
-    private Date startTime;
-    private Date endTime;
+    private Timestamp startTime;
+    private Timestamp endTime;
     private double parkingMinutes = 0.0;
 
-    public ParkingHistory(Car car, Date startTime) {
+    public ParkingHistory(Car car, Timestamp startTime) {
         this.car = car;
         this.startTime = startTime;
     }
 
-    public ParkingHistory(int id, Car car, RowCell rowCell, Date startTime, Date endTime, double parkingMinutes) {
+    public ParkingHistory(int id, Car car, RowCell rowCell, Timestamp startTime, Timestamp endTime, double parkingMinutes) {
         this.id = id;
         this.car = car;
         this.rowCell = rowCell;
@@ -48,19 +48,19 @@ public class ParkingHistory {
         this.rowCell = rowCell;
     }
 
-    public Date getStartTime() {
+    public Timestamp getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(Timestamp startTime) {
         this.startTime = startTime;
     }
 
-    public Date getEndTime() {
+    public Timestamp getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Date endTime) {
+    public void setEndTime(Timestamp endTime) {
         this.endTime = endTime;
     }
 

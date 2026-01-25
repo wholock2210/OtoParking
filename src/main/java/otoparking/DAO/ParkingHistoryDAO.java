@@ -25,8 +25,8 @@ public class ParkingHistoryDAO {
             }else{
                 ps.setInt(2, parkingHistory.getRowCell().getId());
             }
-            ps.setDate(3, parkingHistory.getStartTime());
-            ps.setDate(4, parkingHistory.getEndTime());
+            ps.setTimestamp(3, parkingHistory.getStartTime());
+            ps.setTimestamp(4, parkingHistory.getEndTime());
             ps.setDouble(5, parkingHistory.getParkingMinutes());
             ps.setInt(6, parkingHistory.getId());
 
@@ -73,7 +73,7 @@ public class ParkingHistoryDAO {
                     Car car = cDao.FirstOfDefault(rs.getInt("idCar"));
                     RowCell rowCell = rcDAO.FirstOfDefault(rs.getInt("idRowCell"));
 
-                    ParkingHistory parkingHistory = new ParkingHistory(rs.getInt("id"), car, rowCell, rs.getDate("startTime"), rs.getDate("endTime"), rs.getDouble("parkingMinutes"));
+                    ParkingHistory parkingHistory = new ParkingHistory(rs.getInt("id"), car, rowCell, rs.getTimestamp("startTime"), rs.getTimestamp("endTime"), rs.getDouble("parkingMinutes"));
                     return parkingHistory;
                 }
             } catch (Exception e){
@@ -100,11 +100,11 @@ public class ParkingHistoryDAO {
             }else{
                 ps.setInt(2, parkingHistory.getRowCell().getId());
             }
-            ps.setDate(3, parkingHistory.getStartTime());
+            ps.setTimestamp(3, parkingHistory.getStartTime());
             if(parkingHistory.getEndTime() == null){
-                ps.setNull(4, java.sql.Types.DATE);
+                ps.setNull(4, java.sql.Types.TIMESTAMP);
             }else{
-                ps.setDate(4, parkingHistory.getEndTime());
+                ps.setTimestamp(4, parkingHistory.getEndTime());
             }
             ps.setDouble(5, parkingHistory.getParkingMinutes());
             
@@ -177,8 +177,8 @@ public class ParkingHistoryDAO {
                 list.add(new ParkingHistory(rs.getInt("id"), 
                                             car, 
                                             rowCell, 
-                                            rs.getDate("startTime"), 
-                                            rs.getDate("endTime"), 
+                                            rs.getTimestamp("startTime"), 
+                                            rs.getTimestamp("endTime"), 
                                             rs.getDouble("parkingMinutes")));
             }
         } catch (Exception e){

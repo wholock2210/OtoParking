@@ -7,7 +7,9 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.TextField;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.text.NumberFormat;
+import java.util.Calendar;
 import java.util.Locale;
 
 import javax.swing.Box;
@@ -157,9 +159,14 @@ public class Home extends JPanel {
 
 		JLabel lbStart = new JLabel("Thời gian vào: ");
         lbStart.setFont(f);
-		SpinnerDateModel modelStart = new SpinnerDateModel();
+		SpinnerDateModel modelStart = new SpinnerDateModel(
+			new java.util.Date(),
+			null,
+			null,
+			Calendar.SECOND
+		);
 		spStart = new JSpinner(modelStart);
-		spStart.setEditor(new JSpinner.DateEditor(spStart, "dd,MM,yyyy"));
+		spStart.setEditor(new JSpinner.DateEditor(spStart, "dd/MM/yyyy HH:mm:ss"));
 		spStart.setFont(fnomal);
         spStart.setMaximumSize(new Dimension(Integer.MAX_VALUE, height));
         spStart.setPreferredSize(new Dimension(0, height));
@@ -167,9 +174,14 @@ public class Home extends JPanel {
 
 		JLabel lbEnd = new JLabel("Thời gian ra: ");
         lbEnd.setFont(f);
-		SpinnerDateModel modelEnd = new SpinnerDateModel();
+		SpinnerDateModel modelEnd = new SpinnerDateModel(
+			new java.util.Date(),
+			null,
+			null,
+			Calendar.SECOND
+		);
 		spEnd = new JSpinner(modelEnd);
-		spEnd.setEditor(new JSpinner.DateEditor(spEnd, "dd,MM,yyyy"));
+		spEnd.setEditor(new JSpinner.DateEditor(spEnd, "dd/MM/yyyy HH:mm:ss"));
 		spEnd.setFont(fnomal);
         spEnd.setMaximumSize(new Dimension(Integer.MAX_VALUE, height));
         spEnd.setPreferredSize(new Dimension(0, height));
@@ -284,7 +296,7 @@ public class Home extends JPanel {
 			}
 		}
 
-		Date startDate = history.getStartTime();
+		Timestamp startDate = history.getStartTime();
 		spStart.setValue(startDate);
 		spEnd.setValue(new java.util.Date());
 
@@ -297,10 +309,11 @@ public class Home extends JPanel {
 			}
 		}
 
-		java.util.Date utilStart = (java.util.Date) spStart.getValue();
-		java.util.Date utilEnd = (java.util.Date) spEnd.getValue();
-		Date start = new java.sql.Date(utilStart.getTime());
-		Date end   = new java.sql.Date(utilEnd.getTime());
+		java.util.Date startUtil = (java.util.Date) spStart.getValue();
+		java.util.Date endUtil   = (java.util.Date) spEnd.getValue();
+
+		Timestamp start = new Timestamp(startUtil.getTime());
+		Timestamp end   = new Timestamp(endUtil.getTime());
 
 		double diff = (end.getTime() - start.getTime());
 		totalTime = diff / (1000.0 * 60 * 60);
@@ -403,7 +416,7 @@ public class Home extends JPanel {
 			}
 		}
 
-		Date startDate = history.getStartTime();
+		Timestamp startDate = history.getStartTime();
 		spStart.setValue(startDate);
 		spEnd.setValue(new java.util.Date());
 
@@ -417,11 +430,11 @@ public class Home extends JPanel {
 		}
 
 
-		java.util.Date utilStart = (java.util.Date) spStart.getValue();
-		java.util.Date utilEnd = (java.util.Date) spEnd.getValue();
-		Date start = new java.sql.Date(utilStart.getTime());
-		Date end   = new java.sql.Date(utilEnd.getTime());
+		java.util.Date startUtil = (java.util.Date) spStart.getValue();
+		java.util.Date endUtil   = (java.util.Date) spEnd.getValue();
 
+		Timestamp start = new Timestamp(startUtil.getTime());
+		Timestamp end   = new Timestamp(endUtil.getTime());
 
 		double diff = (end.getTime() - start.getTime());
 		totalTime = diff / (1000.0 * 60 * 60);
@@ -469,7 +482,8 @@ public class Home extends JPanel {
 			return;
 		}
 
-		ParkingHistory newParking = new ParkingHistory(currentCar, new java.sql.Date(System.currentTimeMillis()));
+		ParkingHistory newParking = new ParkingHistory(currentCar,
+			 new java.sql.Timestamp(System.currentTimeMillis()));
 
 		boolean result = phDAO.Insert(newParking);
 		if(result)
@@ -521,7 +535,7 @@ public class Home extends JPanel {
 
 		ParkingHistory currentParking = isParked;
 
-		currentParking.setEndTime(new java.sql.Date(System.currentTimeMillis()));
+		currentParking.setEndTime(new java.sql.Timestamp(System.currentTimeMillis()));
 
 		if(totalMoney == 0.0 || totalMoney < 0.0){
 			JOptionPane.showMessageDialog(
@@ -537,7 +551,7 @@ public class Home extends JPanel {
 		boolean result = phDAO.Update(currentParking);
 		if(result){
 
-			Bill newBill = new Bill(currentParking, totalMoney, new java.sql.Date(System.currentTimeMillis()));
+			Bill newBill = new Bill(currentParking, totalMoney, new java.sql.Timestamp(System.currentTimeMillis()));
 
 			boolean result1 = bDAO.Insert(newBill);
 			NumberFormat vndFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));

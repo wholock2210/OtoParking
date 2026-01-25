@@ -1,20 +1,20 @@
 package otoparking.model;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Bill {
     private int id;
     private ParkingHistory parkingHistory;
     private double totalAmount;
-    private Date createdAt;
+    private Timestamp createdAt;
 
-    public Bill(ParkingHistory parkingHistory, double totalAmount, Date createdAt) {
+    public Bill(ParkingHistory parkingHistory, double totalAmount, Timestamp createdAt) {
         this.parkingHistory = parkingHistory;
         this.totalAmount = totalAmount;
         this.createdAt = createdAt;
     }
 
-    public Bill(int id, ParkingHistory parkingHistory, double totalAmount, Date createdAt) {
+    public Bill(int id, ParkingHistory parkingHistory, double totalAmount, Timestamp createdAt) {
         this.id = id;
         this.parkingHistory = parkingHistory;
         this.totalAmount = totalAmount;
@@ -45,11 +45,11 @@ public class Bill {
         this.totalAmount = totalAmount;
     }
 
-    public Date getCreatedAt() {
+    public Timestamp getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
     }
 

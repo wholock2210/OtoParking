@@ -21,7 +21,7 @@ public class BillDAO {
 
             ps.setInt(1, bill.getParkingHistory().getId());
             ps.setDouble(2, bill.getTotalAmount());
-            ps.setDate(3, bill.getCreatedAt());
+            ps.setTimestamp(3, bill.getCreatedAt());
 
             return ps.executeUpdate() > 0;
 
@@ -56,7 +56,7 @@ public class BillDAO {
         ){
             ps.setInt(1, bill.getParkingHistory().getId());
             ps.setDouble(2, bill.getTotalAmount());
-            ps.setDate(3, bill.getCreatedAt());
+            ps.setTimestamp(3, bill.getCreatedAt());
 
             return ps.executeUpdate() > 0;
         } catch (Exception e){
@@ -84,7 +84,7 @@ public class BillDAO {
                     Bill billResult = new Bill(rs.getInt("id"), 
                                                 parkingHistory, 
                                                 rs.getDouble("totalAmount"), 
-                                                rs.getDate("createdAt"));
+                                                rs.getTimestamp("createdAt"));
 
                     return billResult;
                 }
@@ -111,7 +111,7 @@ public class BillDAO {
                 ParkingHistoryDAO pDao = new ParkingHistoryDAO();
                 ParkingHistory parkingHistory = pDao.FirstOfDefault(rs.getInt("id"));
 
-                list.add(new Bill(rs.getInt("id"), parkingHistory, rs.getDouble("totalAmount"), rs.getDate("createdAt")));
+                list.add(new Bill(rs.getInt("id"), parkingHistory, rs.getDouble("totalAmount"), rs.getTimestamp("createdAt")));
                 
             }
         } catch (Exception e){
