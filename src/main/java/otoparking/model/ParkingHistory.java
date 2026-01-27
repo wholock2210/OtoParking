@@ -15,6 +15,10 @@ public class ParkingHistory {
         this.startTime = startTime;
     }
 
+    public ParkingHistory(){
+        this.id = -1;
+    }
+
     public ParkingHistory(int id, Car car, RowCell rowCell, Timestamp startTime, Timestamp endTime, double parkingMinutes) {
         this.id = id;
         this.car = car;

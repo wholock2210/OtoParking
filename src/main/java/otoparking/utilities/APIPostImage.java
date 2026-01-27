@@ -39,7 +39,7 @@ public class APIPostImage {
         this.licencePlate = licencePlate;
     }
 
-    private final String URL_API = "http://localhost:8000/detect-plate";
+    private final String URL_API = "http://100.101.143.118:8000/detect-plate";
     private final HttpClient client = HttpClient.newBuilder()
         .version(HttpClient.Version.HTTP_1_1) 
         .build();

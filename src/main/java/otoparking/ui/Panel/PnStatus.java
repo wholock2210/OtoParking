@@ -26,7 +26,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 import otoparking.DAO.*;
-import otoparking.model.Cell;
+// import otoparking.model.Cell;
 import otoparking.model.Status;
 
 public class PnStatus extends JPanel {

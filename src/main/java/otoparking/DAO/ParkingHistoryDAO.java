@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import otoparking.model.*;
+// import java.sql.Timestamp;
+
 
 import otoparking.utilities.DBConection;;
 
@@ -117,7 +119,13 @@ public class ParkingHistoryDAO {
     }
 
     public ParkingHistory FirstOfDefault(int id){
-        String query = "select * from ParkingHistory where id = ? LIMIT 1";
+        String query = "SELECT *\n" + //
+                        
+                        "FROM \n" + //
+                        "    ParkingHistory ph  \n" + //
+                        
+                        "WHERE ph.id = ? " + 
+                        "LIMIT 1"; 
         try (
             Connection conn = DBConection.GetConnection();
             PreparedStatement ps = conn.prepareStatement(query);
@@ -126,14 +134,23 @@ public class ParkingHistoryDAO {
             try(
                 ResultSet rs = ps.executeQuery();
             ){
-                CarDAO cDao = new CarDAO();
-                RowCellDAO rcDAO = new RowCellDAO();
+                if(rs.next()){
+                    CarDAO cDao = new CarDAO();
+                    RowCellDAO rcDAO = new RowCellDAO();
 
-                Car car = cDao.FirstOfDefault(rs.getInt("idCar"));
-                RowCell rowCell = rcDAO.FirstOfDefault(rs.getInt("idRowCell"));
+                    Car car = cDao.FirstOfDefault(rs.getInt("idCar"));
 
-                ParkingHistory parkingHistory = new ParkingHistory(id, car, rowCell, null, null, id);
-                return parkingHistory;
+                    RowCell rowCell = rcDAO.FirstOfDefault(rs.getInt("idRowCell"));
+
+                    ParkingHistory parkingHistory = new ParkingHistory(id, 
+                                                                    car, 
+                                                                    rowCell, 
+                                                                    rs.getTimestamp("startTime"), 
+                                                                    rs.getTimestamp("endTime"), 
+                                                                    rs.getDouble("parkingMinutes"));
+                    return parkingHistory;
+                }
+                
             } catch (Exception e){
                 e.printStackTrace();
             }
@@ -145,21 +162,37 @@ public class ParkingHistoryDAO {
 
     public List<ParkingHistory> FindAll(){
         List<ParkingHistory> list = new ArrayList<>();
-        // String query = "select c.licensePlate, rc.id, ph.startTime, ph.endTime, ph.parkingMinutes" +
+        String query = "SELECT\n" + //
+                        "    ph.id,\n" + //
+                        "    c.licensePlate,\n" + //
+                        "    CONCAT(rcs.floor_sym, '-', rcs.row_sym, '-', rcs.cell_sym) AS position,\n" + //
+                        "    ph.startTime,\n" + //
+                        "    ph.endTime,\n" + //
+                        "    ph.parkingMinutes\n" + //
+                        "FROM \n" + //
+                        "    ParkingHistory ph  \n" + //
+                        "JOIN \n" + //
+                        "    Car c ON c.id = ph.idCar  \n" + //
+                        "JOIN (\n" + //
+                        "    SELECT \n" + //
+                        "        rc.id AS idRowCell, \n" + //
+                        "        fl.symbol AS floor_sym,\n" + //
+                        "        pr.symbol AS row_sym,\n" + //
+                        "        ce.symbol AS cell_sym\n" + //
+                        "    FROM RowCell rc\n" + //
+                        "    JOIN Cell ce ON ce.id = rc.idCell  \n" + //
+                        "    JOIN Floor fl ON fl.id = rc.idFloor  \n" + //
+                        "    JOIN ParkingRow pr ON pr.id = rc.idRow  \n" + //
+                        ") AS rcs ON ph.idRowCell = rcs.idRowCell ";
+
+        // String query = "select *" +
         //                 "from ParkingHistory ph " + 
         //                 "join Car c on c.id = ph.idCar " +
         //                 "join RowCell rc on rc.id = ph.idRowCell " +
-        //                 "join Cell ce on ce.id = ph.idCell " +
-        //                 "join ";
-
-        String query = "select *" +
-                        "from ParkingHistory ph " + 
-                        "join Car c on c.id = ph.idCar " +
-                        "join RowCell rc on rc.id = ph.idRowCell " +
-                        "join Cell ce on ce.id = rc.idCell " +
-                        "join Floor fl on fl.id = rc.idFloor " +
-                        "join ParkingRow pr on pr.id = rc.idRow " +
-                        "join Status st on st.id = rc.idStatus ";
+        //                 "join Cell ce on ce.id = rc.idCell " +
+        //                 "join Floor fl on fl.id = rc.idFloor " +
+        //                 "join ParkingRow pr on pr.id = rc.idRow " +
+        //                 "join Status st on st.id = rc.idStatus ";
 
         try(
             Connection conn = DBConection.GetConnection();
@@ -167,7 +200,7 @@ public class ParkingHistoryDAO {
             ResultSet rs = ps.executeQuery();
         ){  
             while (rs.next()) {
-                Car car = new Car(rs.getInt("idCar"), 
+                Car car = new Car(rs.getInt("id"), 
                                 rs.getString("licensePlate"));
                                 
                 RowCellDAO rowCellDAO = new RowCellDAO();

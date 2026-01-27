@@ -7,6 +7,11 @@ public class RowCell {
     private ParkingRow parkingRow;
     private Status status;
 
+    @Override
+    public String toString() {
+        return "Tầng " + getFloor().getSymbol() + " Hàng " + getParkingRow().getSymbol() + " Ô " + getCell().getSymbol();
+    }
+
     public RowCell(int id, Cell cell, Floor floor, ParkingRow parkingRow, Status status) {
         this.id = id;
         this.cell = cell;

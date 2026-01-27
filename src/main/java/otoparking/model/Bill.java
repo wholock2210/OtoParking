@@ -14,6 +14,8 @@ public class Bill {
         this.createdAt = createdAt;
     }
 
+    
+    
     public Bill(int id, ParkingHistory parkingHistory, double totalAmount, Timestamp createdAt) {
         this.id = id;
         this.parkingHistory = parkingHistory;

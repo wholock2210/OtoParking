@@ -1,5 +1,7 @@
 package otoparking.ui;
 
+import otoparking.ui.Panel.PnBill;
+import otoparking.ui.Panel.PnParkingHistory;
 import otoparking.utilities.*;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -132,6 +134,27 @@ public class HistoryMenu extends JPanel {
 
 		pnMain.add(btnHistory);
 		pnMain.add(btnBill);
+
+		CardLayout clChild = (CardLayout) pnChild.getLayout();
+		pnChild.add(new PnParkingHistory(pnChild, clChild), "ParkingHistory");
+		pnChild.add(new PnBill(pnChild, clChild), "Bill");
+		
+
+		btnHistory.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e){
+				clChild.show(pnChild, "ParkingHistory");
+			}
+		});
+
+		btnBill.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e){
+				clChild.show(pnChild, "Bill");
+			}
+		});
 	}
+
+	
 
 }

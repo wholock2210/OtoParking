@@ -67,8 +67,17 @@ public class BillDAO {
     }
 
     public Bill FirstOfDefault(int id){
-        String query = "select * from Bill b " +
-                        "join ParkingHistory ph on ph.id = b.idParkingHistory ";
+        String query = "SELECT\n" + //
+                        "\tb.id\n" + //
+                        "    ,b.`idParkingHistory`\n" + //
+                        "    ,b.`totalAmount`\n" + //
+                        "    ,b.`createdAt`\n" + //
+                        "FROM\n" + //
+                        "\t`Bill` b \n" + //
+                        "JOIN\n" + //
+                        "\t`ParkingHistory` ph on ph.id = b.`idParkingHistory`" +
+                        "WHERE b.id = ? " +
+                        "LIMIT 1";
 
         try (
             Connection conn = DBConection.GetConnection();
@@ -100,7 +109,15 @@ public class BillDAO {
     public List<Bill> FindAll(){
         List<Bill> list = new ArrayList<>();
 
-        String query = "select * from Bill";
+        String query = "SELECT\n" + //
+                        "\tb.id\n" + //
+                        "    ,b.`idParkingHistory`\n" + //
+                        "    ,b.`totalAmount`\n" + //
+                        "    ,b.`createdAt`\n" + //
+                        "FROM\n" + //
+                        "\t`Bill` b \n" + //
+                        "JOIN\n" + //
+                        "\t`ParkingHistory` ph on ph.id = b.`idParkingHistory`";
 
         try(
             Connection conn = DBConection.GetConnection();
