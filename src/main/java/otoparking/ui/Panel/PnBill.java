@@ -151,28 +151,35 @@ public class PnBill extends JPanel{
 	}
 
 	private void onTableSelected(ListSelectionEvent e){
-		if (!e.getValueIsAdjusting()) {
-			int selectedRow = table.getSelectedRow();
-			if (selectedRow != -1) {
-				int modelRow = table.convertRowIndexToModel(selectedRow);
-				int id = (int) tableModel.getValueAt(modelRow, 0);
-				
+    	if (e.getValueIsAdjusting()) return;
 
-				currentBill = bDAO.FirstOfDefault(id);
+    	int selectedRow = table.getSelectedRow();
+    	if (selectedRow < 0) return;
 
-				if(currentBill != null){
-					tfId.setText(String.valueOf(currentBill.getId()));
-                    tfIdParkingHistory.setText(String.valueOf(currentBill.getParkingHistory().getId()));
-					tfTotalAmount.setText(String.valueOf(currentBill.getTotalAmount()));
-					tfCreatedAt.setText(String.valueOf(currentBill.getCreatedAt()));
-				}
-				else{
-					tfIdParkingHistory.setText("NULL");
-					System.out.print("Hóa đơn lỗi: " + currentBill.getParkingHistory().getId());
-				}
-			}
-		}
+    	int modelRow = table.convertRowIndexToModel(selectedRow);
+    	int id = (int) tableModel.getValueAt(modelRow, 0);
+
+    	currentBill = bDAO.FirstOfDefault(id);
+    	if (currentBill == null) {
+        	JOptionPane.showMessageDialog(this,
+            	"Không tìm thấy hóa đơn",
+            	"Lỗi",
+            	JOptionPane.ERROR_MESSAGE);
+        	return;
+    	}
+
+    	tfId.setText(String.valueOf(currentBill.getId()));
+    	tfTotalAmount.setText(String.valueOf(currentBill.getTotalAmount()));
+    	tfCreatedAt.setText(String.valueOf(currentBill.getCreatedAt()));
+
+    	ParkingHistory ph = currentBill.getParkingHistory();
+    	if (ph != null && ph.getRowCell() != null) {
+        	tfIdParkingHistory.setText(String.valueOf(ph.getId()));
+    	} else {
+        	tfIdParkingHistory.setText("Dữ liệu còn thiếu");
+    	}
 	}
+
 
 	// private void onJBCreate(){
 	// 	ParkingHistory tc = (TypeCar) cbTypeCar.getSelectedItem();
