@@ -55,7 +55,6 @@ public class Home extends JPanel {
 	private JComboBox<TypeCar> cbTypeCar;
 	private JSpinner spStart, spEnd;
 	private CarDAO cDAO;
-	private TypeCarDAO	tcDAO;
 	private ParkingHistoryDAO phDAO;
 	private RowCellDAO rcDAO;
 	private PriceListDAO plDAO;
@@ -82,7 +81,6 @@ public class Home extends JPanel {
         cameraService = new CameraService();
 
 		cDAO = new CarDAO();
-		tcDAO = new TypeCarDAO();
 		phDAO = new ParkingHistoryDAO();
 		rcDAO = new RowCellDAO();
 		plDAO = new PriceListDAO();
