@@ -12,11 +12,11 @@ public class RowCell {
         return "Tầng " + getFloor().getSymbol() + " Hàng " + getParkingRow().getSymbol() + " Ô " + getCell().getSymbol();
     }
 
-    public RowCell(int id, Cell cell, Floor floor, ParkingRow parkingRow, Status status) {
+    public RowCell(int id, Floor floor, ParkingRow parkingRow, Cell cell, Status status) {
         this.id = id;
-        this.cell = cell;
         this.floor = floor;
         this.parkingRow = parkingRow;
+        this.cell = cell;
         this.status = status;
     }
 

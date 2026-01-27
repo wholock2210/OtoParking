@@ -3,6 +3,7 @@ package otoparking.ui;
 import otoparking.ui.Panel.PnCell;
 import otoparking.ui.Panel.PnFloor;
 import otoparking.ui.Panel.PnParkingRow;
+import otoparking.ui.Panel.PnRowCell;
 import otoparking.ui.Panel.PnStatus;
 import otoparking.utilities.*;
 import java.awt.BorderLayout;
@@ -223,6 +224,7 @@ public class ParkingMenu extends JPanel {
 		pnChild.add(new PnFloor(pnChild, clChild), "Floor");
 		pnChild.add(new PnParkingRow(pnChild, clChild), "Parking Row");
 		pnChild.add(new PnStatus(pnChild, clChild), "Status");
+		pnChild.add(new PnRowCell(pnChild, clChild), "Row Cell");
 
 		btnCell.addActionListener(e -> {
 			clChild.show(pnChild, "Cell");
@@ -238,6 +240,10 @@ public class ParkingMenu extends JPanel {
 
 		btnStatus.addActionListener(e -> {
 			clChild.show(pnChild, "Status");
+		});
+
+		btnRowCell.addActionListener(e -> {
+			clChild.show(pnChild, "Row Cell");
 		});
 	}
 
